@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>APP Assignment</title>
+	<link rel="stylesheet" href="static/w3.css">
+	<link rel="stylesheet" href="static/w3-deep-purple-theme.css">
+</head>
+
+<body>
+	<!-- Navbar -->
+	<div class="w3-container w3-theme w3-card">
+		<h1>Application of Programming Principles Submission Assignment</h1>
+		<!-- navbar links -->
+		<div class="w3-card w3-theme-d5">
+			<a href="#about">ABOUT</a>
+			<a href="#calculator">CALCULATOR</a>
+			<a href="#journal">JOURNAL</a>
+
+		</div>
+	</div>
+
+	<!-- About Section -->
+	<div id="about" class="w3-container">
+		<h3>About APP Assignment</h3>
+		<p>This is the APP unit submission assignment template site for you to use as a starting point for you work.</p>
+		<p>It consists of a flask app containg the starter files you will need.</p>
+		<div>
+			<h3>Calculator</h3>
+			<p>This is a guided task that helps you pull what you have learned so far together to build a calcualtor section that
+				uses JS to connect the client-side to the server-side.</p>
+		</div>
+		<div>
+			<h3>Journal</h3>
+			<p>This is a further guided task that takes you through adding, editing and deleting and storing data in a file on the
+				server.
+			</p>
+		</div>
+		<div>
+			<h3>Self-Worked Task</h3>
+			<p>This is a task where you get to fly solo without guided help. Check the assignment brief for details of the task.</p>
+		</div>
+
+	</div>
+
+	<!-- Calculator Section -->
+	<div id="calculator" class="w3-container w3-theme-l5">
+		<h2>Calculator</h2>
+		<p>The one who runs the sums</p>
+		<div>
+			<h3>Add</h3>
+			<input type="number" id="add1"/> + <input type="number" id="add2"/> = <input type="text" id="inputAdd"/>
+            <p><button id="btnAdd" class="w3-button w3-theme-d5">Add</button></p>
+            <p><button id="btnAddAPI" class="w3-button w3-theme-d5">Add via API</button></p>
+        </div>
+        <div >
+            <h3>Subtract</h3>
+            <input type="number" id="sub1"/> - <input type="number" id="sub2"/> = <input type="text" id="inputSubtract"/>
+            <p><button id="btnSubtract" class="w3-button w3-theme-d5">Subtract</button></p>
+            <p><button id="btnSubtractAPI" class="w3-button w3-theme-d5"> Subtract via API</button></p>
+        </div>
+        <div >
+            <h3>Multiply</h3>
+            <input type="number" id="multi1"/> x <input type="number" id="multi2"/> = <input type="text" id="inputMultiply"/>
+            <p><button id="btnMultiply" class="w3-button w3-theme-d5">Multiply</button></p>
+            <p><button id="btnMultiplyAPI" class="w3-button w3-theme-d5">Multiply via API</button></p>
+        </div>
+        <div >
+          <h3>Divide</h3>
+            <input type="number" id="divi1"/> / <input type="number" id="divi2"/> = <input type="text" id="inputDivide"/>
+            <p><button id="btnDivide" class="w3-button w3-theme-d5">Divide</button></p>
+            <p><button id="btnDivideAPI" class="w3-button w3-theme-d5">Divide via API</button></p>
+        </div>
+    </div>
+
+    <!-- Journal Section -->
+    <div id="journal" class="w3-container w3-theme-l4 ">
+        <h2>Journal</h2>
+        <p>What I've done</p>
+        <div>
+            <h3>Journal Entries</h3>
+            <ol id="listEntries" class="w3-ul w3-card w3-hoverable w3-theme-l4">
+              <li>item 1</li>
+              <li>item 2</li>
+            </ol>
+        </div>
+        <div>
+            <button id="btnUploadJournal" class="w3-button w3-theme-d5 w3-margin-top">upload journal</button>
+        </div>
+    
+        <div id="journalItem" >
+          <h3>Selected Entry</h3>
+            <div>
+                <div><label for="idEntry">ID: </label>
+                <input type="text" id="idEntry" class="w3-input w3-border w3-round"></div>
+                <div><label for="dateEntry">Date: </label>
+                <input type="text" id="dateEntry" class="w3-input w3-border w3-round"></div>
+                <label for="namEntry">Name: </label>
+                <div><input type="text" id="namEntry" class="w3-input w3-border w3-round"></div>
+                <label for="txtNote">Notes: </label>
+                <textarea id="txtNote" name="txtNote" rows="4" cols="50" class="w3-input w3-border w3-round"></textarea>
+        </div>
+        <div>
+          <div> <button id="btnDeleteEntry" class="w3-button w3-theme-d5 w3-margin-top">Delete</button></div>
+        </div>
+    
+
+        <div id="addItem" >
+            <h3>Add Entry</h3>
+            <div>
+                <div><label for="idEntry">ID:</label>
+                <input type="text" id="idAdd" class="w3-input w3-border w3-round" required></div>
+                <div><label for="dateEntry">Date: </label>
+                <input type="text" id="dateAdd" class="w3-input w3-border w3-round" required></div>
+                <div><label for="nameEntry">Name: </label>
+                <input type="text" id="nameAdd" class="w3-input w3-border w3-round" required></div>
+                <label for="txtEntry">Notes: </label>
+            <textarea id="txtAdd" name="txtAdd" rows="4" cols="50" class="w3-input w3-border w3-round" required></textarea>
+        </div>
+        <div>
+            <button id="btnAddEntry" class="w3-button w3-theme-d5 w3-margin-top">Add</button>
+        </div>
+    </div>
+    </div>
+    <!-- Footer -->
+    <footer class="w3-footer w3-theme-d1 w3-margin-top">
+      <a href="#home">To the top</a>
+    </footer>
+
+<script src="static/scripts/app.js"></script>
+</body>
+</html>
