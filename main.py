@@ -1,16 +1,12 @@
 """
  Application of Programming Principles
  Assignment Template 2021-22 - Flask & Python
+ 
 """
 from flask import Flask, render_template, jsonify, request, make_response
 import sys, json
 
 app = Flask(__name__)
-
-
-#@app.route('/')
-#def hello_world():
-   # return 'Hello World!'
 
 @app.route('/')
 def home():
@@ -28,9 +24,20 @@ def add():
     """
 
     # add your code here
+    total = 0
     # use request.args.get('variablename') to get sent vars
-
-    #return response
+    num1 = float(request.args.get('num1'))
+    num2 = float(request.args.get('num2'))
+    total = num1 + num2
+    # end
+    response = make_response(
+                jsonify(
+                    {"result": str(total)}
+                ),
+                200,
+            )
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 
 @app.route("/api/subtract", methods = ['GET'])
@@ -42,7 +49,23 @@ def subtract():
         format the result into JSON
         return the JSON response object
     """
-
+    print("subtracting on api")
+    # add your code start line
+    # use request.args.get('variablename') to get vars
+    num1 = float(request.args.get('num1'))
+    num2 = float(request.args.get('num2'))
+    total = num1 - num2
+    # end
+    print("total = " + str(total))
+    response = make_response(
+                jsonify(
+                    {"result": str(total)}
+                ),
+                200,
+            )
+    response.headers["Content-Type"] = "application/json"
+    print("after response made: " + str(response))
+    return response
 
 @app.route("/api/multiply", methods = ['GET'])
 def multiply():
@@ -53,7 +76,23 @@ def multiply():
         format the result into JSON
         return the JSON response object
     """
-
+    print("multiplying on api")
+    # add your code start line
+    # use request.args.get('variablename') to get vars
+    num1 = float(request.args.get('num1'))
+    num2 = float(request.args.get('num2'))
+    total = num1 * num2
+    # end
+    print("total = " + str(total))
+    response = make_response(
+                jsonify(
+                    {"result": str(total)}
+                ),
+                200,
+            )
+    response.headers["Content-Type"] = "application/json"
+    print("after response made: " + str(response))
+    return response
 
 @app.route("/api/divide", methods = ['GET'])
 def divide():
@@ -64,7 +103,23 @@ def divide():
         format the result into JSON
         return the JSON response object
     """
-
+    # print("dividing on api")
+    # add your code start line
+    # use request.args.get('variablename') to get vars
+    num1 = float(request.args.get('num1'))
+    num2 = float(request.args.get('num2'))
+    total = num1 / num2
+    # end
+    # print("total = " + str(total))
+    response = make_response(
+                jsonify(
+                    {"result": str(total)}
+                ),
+                200,
+            )
+    response.headers["Content-Type"] = "application/json"
+    # print("after response made: " + str(response))
+    return response
 
 @app.route("/api/journal", methods = ['GET', 'PUT'])
 def journal():

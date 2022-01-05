@@ -3,11 +3,23 @@
  * Assignment Template 2021 - Javascript
  * @author Tim Orman
  */
-
+console.log("hello from external app.js");
 /**
  * event handlers can go here
  */
 //calculator event handlers - one for each button
+document.getElementById("btnAdd").addEventListener("click", addNumbers);
+document.getElementById("btnAddAPI").addEventListener("click", addNumbersAPI);
+
+document.getElementById("btnSubtract").addEventListener("click", subtractNumbers);
+document.getElementById("btnSubtractAPI").addEventListener("click", subtractNumbersAPI);
+
+document.getElementById("btnMultiply").addEventListener("click", multiplyNumbers);
+document.getElementById("btnMultiplyAPI").addEventListener("click", multiplyNumbersAPI);
+
+document.getElementById("btnDivide").addEventListener("click", divideNumbers);
+document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersAPI);
+
 //journal event handlers - one for each button
 
 /**
@@ -24,6 +36,16 @@
  */
 function callAPI(url, elResponse) {
     //use the code from the lab task to complete the function
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      let strResponse = "Error: no response";
+      if (this.readyState == 4 && this.status == 200) {
+        strResponse = JSON.parse(this.responseText);
+      }
+      document.getElementById(elResponse).setAttribute("value",  strResponse.result);
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
 }
 
 /**
@@ -39,7 +61,10 @@ function callAPI(url, elResponse) {
  * * set the result element in the html page to display the result of the calculation
  */
 function addNumbers(){
-
+    console.log("adding ");
+    let num1 = Number(document.getElementById("add1").value);
+    let num2 = Number(document.getElementById("add2").value);
+    document.getElementById("inputAdd").setAttribute("value",  num1 + num2);
 }
 
 /**
@@ -53,6 +78,11 @@ function addNumbers(){
  */
 function addNumbersAPI(){
     //use the code from the lab task to complete the function
+    console.log("adding on API");
+    let num1 = Number(document.getElementById("add1").value);
+    let num2 = Number(document.getElementById("add2").value);
+    let url = "/api/add?num1=" + num1 + "&num2=" + num2;
+    callAPI(url, "inputAdd");
 }
 
 /**
@@ -65,7 +95,10 @@ function addNumbersAPI(){
  * * set the result element in the html page to display the result of the calculation
  */
 function subtractNumbers(){
-
+    console.log("subtracting ");
+    let num1 = Number(document.getElementById("sub1").value);
+    let num2 = Number(document.getElementById("sub2").value);
+    document.getElementById("inputSubtract").setAttribute("value",  num1 - num2);
 }
 
 /**
@@ -78,7 +111,11 @@ function subtractNumbers(){
  * * Use callAPI() function to form and send a request object
  */
 function subtractNumbersAPI(){
-
+    console.log("subtracting on API");
+    let num1 = Number(document.getElementById("sub1").value);
+    let num2 = Number(document.getElementById("sub2").value);
+    let url = "/api/subtract?num1=" + num1 + "&num2=" + num2;
+    callAPI(url, "inputSubtract");
 }
 
 /**
@@ -91,7 +128,10 @@ function subtractNumbersAPI(){
  * * set the result element in the html page to display the result of the calculation
  */
 function multiplyNumbers(){
-
+  console.log("multiplying");
+  let num1 = Number(document.getElementById("multi1").value);
+  let num2 = Number(document.getElementById("multi2").value);
+  document.getElementById("inputMultiply").setAttribute("value",  num1 * num2);
 }
 
 /**
@@ -104,7 +144,11 @@ function multiplyNumbers(){
  * * Use callAPI() function to form and send a request object
  */
 function multiplyNumbersAPI(){
-
+  console.log("multiplying on API");
+  let num1 = Number(document.getElementById("multi1").value);
+  let num2 = Number(document.getElementById("multi2").value);
+  let url = "/api/multiply?num1=" + num1 + "&num2=" + num2;
+  callAPI(url, "inputMultiply");
 }
 
 /**
@@ -119,7 +163,10 @@ function multiplyNumbersAPI(){
  * and ensure you do not have divide by zero errors.
  */
 function divideNumbers(){
-
+  console.log("dividing");
+  let num1 = Number(document.getElementById("divi1").value);
+  let num2 = Number(document.getElementById("divi2").value);
+  document.getElementById("inputDivide").setAttribute("value",  num1 / num2);
 }
 
 /**
@@ -132,7 +179,11 @@ function divideNumbers(){
  * * Use callAPI() function to form and send a request object
  */
 function divideNumbersAPI(){
-
+  console.log("dividing on API");
+  let num1 = Number(document.getElementById("divi1").value);
+  let num2 = Number(document.getElementById("divi2").value);
+  let url = "/api/divide?num1=" + num1 + "&num2=" + num2;
+  callAPI(url, "inputDivide");
 }
 
 /**
@@ -147,7 +198,11 @@ function divideNumbersAPI(){
  * * set the content of the "listEntries" element to the formatted string
  */
 function getJournalEntries(){
-
+  console.log("dividing on API");
+  let num1 = Number(document.getElementById("divi1").value);
+  let num2 = Number(document.getElementById("divi2").value);
+  let url = "/api/divide?num1=" + num1 + "&num2=" + num2;
+  callAPI(url, "inputDivide");
 }
 /**
  * Dont forget to call the function that will retrieve the list entries when the page loads
