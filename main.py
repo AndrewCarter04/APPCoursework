@@ -4,7 +4,7 @@
  
 """
 from flask import Flask, render_template, jsonify, request, make_response
-import sys, json
+import sys, json, os
 
 app = Flask(__name__)
 
@@ -12,6 +12,7 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+# calculator 
 
 @app.route("/api/add", methods = ['GET'])
 def add():
@@ -121,7 +122,9 @@ def divide():
     # print("after response made: " + str(response))
     return response
 
-@app.route("/api/journal", methods = ['GET', 'PUT'])
+# Journal functions
+
+@app.route("/api/journal", methods = ['GET'])
 def journal():
     """
     Write a function to
@@ -129,7 +132,16 @@ def journal():
         format the result into JSON response object
         return the JSON response object
     """
+    # file_name = "data/journal_test.json"
+    site_root = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(site_root, "data", "journal_testfile.json")
 
+    # with keyword deels with closing file etc. 
+    with open(json_url, 'r') as openfile:
+      # Reading from json file
+      json_object = json.load(openfile)
+    
+    return json_object
 
 
 # run app
