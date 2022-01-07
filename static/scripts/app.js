@@ -19,11 +19,24 @@ document.getElementById("btnMultiplyAPI").addEventListener("click", multiplyNumb
 
 document.getElementById("btnDivide").addEventListener("click", divideNumbers);
 document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersAPI);
+
+document.getElementById("listEntries").addEventListener('click', populateEntry);
+
+document.getElementById("btnDeleteEntry").addEventListener('click', deleteEntry);
+document.getElementById("btnAddEntry").addEventListener('click', addEntry);
+
 // initialise journal list
 document.addEventListener("DOMContentLoaded", function(){
     console.log("calling getJournal")
     getJournalEntries();
 });
+
+//utility functions - DO NOT EDIT OR DELETE
+function getUniqueKey(){
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    );
+};
 
 //journal event handlers
 
@@ -218,7 +231,7 @@ function getJournalEntries(){
       
       let journalList = "";
       for (let item of journalResult.journals) {
-        journalList = journalList + "<li name='" + String(item.date) +  "' name='" + String(item.name) + "' city='" + String(item.note) + "' id='" + journalResult.journals.indexOf(item) + "'>" + String(item.date) + "</li>";}
+        journalList = journalList + "<li dat='" + String(item.date) +  "' name='" + String(item.name) + "' note='" + String(item.note) + "' id='itemEntry" + journalResult.journals.indexOf(item) + "'>" + String(item.date) + "</li>";}
      
     document.getElementById("listEntries").innerHTML = journalList;
     
@@ -234,6 +247,19 @@ function getJournalEntries(){
  * Dont forget to call the function that will retrieve the list entries when the page loads
  */
 
+/**
+ * clearEntry()
+ *
+ * Write a function that will
+ * * clear the selected entry inputs
+ *
+ */
+function clearEntry(){
+    document.getElementById("idEntry").value = "";
+    document.getElementById("dateEntry").value = "";
+    document.getElementById("namEntry").value = "";
+    document.getElementById("txtNote").value = "";
+}
 
 /**
  * populateEntry(item)
@@ -244,8 +270,18 @@ function getJournalEntries(){
  * * and put each piece of information into the text fields on the html page
  * @param item
  */
-function populateEntry(item){
-
+function populateEntry(e){
+    //clear old entry
+    clearEntry()
+    console.log("item: " + e.target);
+    let itemIndex = e.target.id
+    let itemDate = e.target.getAttribute("dat");
+    let itemName = e.target.getAttribute("name");
+    let itemNote = e.target.getAttribute("note");
+    document.getElementById("idEntry").value = itemIndex;
+    document.getElementById("dateEntry").value = itemDate;
+    document.getElementById("namEntry").value = itemName;
+    document.getElementById("txtNote").value = itemNote;
 }
 
 /**
@@ -258,7 +294,16 @@ function populateEntry(item){
  * * append the new node to the list of entries
  */
 function addEntry(){
-
+  let uid = getUniqueKey();
+  console.log("uid: " + uid)
+  const dat = new Date();
+  let newDate = dat.getDate() + "/" + dat.getMonth() + "/" + dat.getFullYear();
+  console.log("date: " + newDate);
+  let newName = document.getElementById("nameAdd").value;
+  let newNote = document.getElementById("txtAdd").value;
+  if(newName == "" || newNote == ""){
+    alert("Please enter values in the name and the notes inputs.")
+  }
 }
 
 /**
@@ -268,6 +313,15 @@ function addEntry(){
  * * delete a journal entry (list item) from the html page
  */
 function deleteEntry(){
+  let idToDelete = document.getElementById("idEntry").value; 
+  if(idToDelete != ""){
+    document.getElementById(idToDelete).remove();
+    //remove deleted details from selected entry boxes
+    clearEntry()
+  } else {
+    alert("Please select an entry to delete.")
+  }
+ 
 
 }
 
