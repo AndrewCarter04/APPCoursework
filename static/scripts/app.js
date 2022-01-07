@@ -19,11 +19,16 @@ document.getElementById("btnMultiplyAPI").addEventListener("click", multiplyNumb
 
 document.getElementById("btnDivide").addEventListener("click", divideNumbers);
 document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersAPI);
+// initialise journal list
+document.addEventListener("DOMContentLoaded", function(){
+    console.log("calling getJournal")
+    getJournalEntries();
+});
 
-//journal event handlers - one for each button
+//journal event handlers
 
 /**
- * callAPI()
+ * callAPI_calc()
  *
  * This function uses the built-in (to the browser) XMLHttpRequest object to request data from a server
  * The responseText property returns the response from the server as a string.
@@ -34,7 +39,7 @@ document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersA
  * @param url
  * @param elResponse
  */
-function callAPI(url, elResponse) {
+function callAPI_calc(url, elResponse) {
     //use the code from the lab task to complete the function
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -82,7 +87,7 @@ function addNumbersAPI(){
     let num1 = Number(document.getElementById("add1").value);
     let num2 = Number(document.getElementById("add2").value);
     let url = "/api/add?num1=" + num1 + "&num2=" + num2;
-    callAPI(url, "inputAdd");
+    callAPI_calc(url, "inputAdd");
 }
 
 /**
@@ -115,7 +120,7 @@ function subtractNumbersAPI(){
     let num1 = Number(document.getElementById("sub1").value);
     let num2 = Number(document.getElementById("sub2").value);
     let url = "/api/subtract?num1=" + num1 + "&num2=" + num2;
-    callAPI(url, "inputSubtract");
+    callAPI_calc(url, "inputSubtract");
 }
 
 /**
@@ -148,7 +153,7 @@ function multiplyNumbersAPI(){
   let num1 = Number(document.getElementById("multi1").value);
   let num2 = Number(document.getElementById("multi2").value);
   let url = "/api/multiply?num1=" + num1 + "&num2=" + num2;
-  callAPI(url, "inputMultiply");
+  callAPI_calc(url, "inputMultiply");
 }
 
 /**
@@ -183,12 +188,16 @@ function divideNumbersAPI(){
   let num1 = Number(document.getElementById("divi1").value);
   let num2 = Number(document.getElementById("divi2").value);
   let url = "/api/divide?num1=" + num1 + "&num2=" + num2;
-  callAPI(url, "inputDivide");
+  callAPI_calc(url, "inputDivide");
 }
 
 /**
  * Journal Stuff
  */
+
+
+
+
 /**
  * getJournalEntries() - Get list of journal entries
  *
@@ -198,11 +207,28 @@ function divideNumbersAPI(){
  * * set the content of the "listEntries" element to the formatted string
  */
 function getJournalEntries(){
-  console.log("dividing on API");
-  let num1 = Number(document.getElementById("divi1").value);
-  let num2 = Number(document.getElementById("divi2").value);
-  let url = "/api/divide?num1=" + num1 + "&num2=" + num2;
-  callAPI(url, "inputDivide");
+  console.log("getting journal entries");
+  let xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    console.log("xhttp ready state recieved")
+    if (this.readyState == 4 && this.status == 200) { 
+      console.log("ready and OK");
+      let journalResult = JSON.parse(this.responseText);
+      console.log(journalResult);
+      
+      let journalList = "";
+      for (let item of journalResult.journals) {
+        journalList = journalList + "<li name='" + String(item.date) +  "' name='" + String(item.name) + "' city='" + String(item.note) + "' id='" + journalResult.journals.indexOf(item) + "'>" + String(item.date) + "</li>";}
+     
+    document.getElementById("listEntries").innerHTML = journalList;
+    
+    }
+    else{
+      console.log("xhttp request problem occurred")
+    }
+  }
+  xhttp.open("GET", "api/journal", true);
+  xhttp.send();
 }
 /**
  * Dont forget to call the function that will retrieve the list entries when the page loads

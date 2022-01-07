@@ -140,7 +140,6 @@ def journal():
     with open(json_url, 'r') as openfile:
       # Reading from json file
       json_object = json.load(openfile)
-    
     return json_object
 
 
