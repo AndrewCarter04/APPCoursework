@@ -303,6 +303,16 @@ function addEntry(){
   let newNote = document.getElementById("txtAdd").value;
   if(newName == "" || newNote == ""){
     alert("Please enter values in the name and the notes inputs.")
+  }else{
+    //create new li item
+    let newEntry = document.createElement('li');
+    newEntry.id = uid;
+    newEntry.setAttribute("dat", newDate)
+    newEntry.setAttribute("name", newName);
+    newEntry.setAttribute("note", newNote);
+    newEntry.innerText = newDate;
+    document.getElementById("listEntries").appendChild(newEntry)
+    alert("Journal entry added to clientsdide list. Upload to save the list.")
   }
 }
 
@@ -318,6 +328,7 @@ function deleteEntry(){
     document.getElementById(idToDelete).remove();
     //remove deleted details from selected entry boxes
     clearEntry()
+    alert("Journal entry deleted on clientside. Upload to save changes.")
   } else {
     alert("Please select an entry to delete.")
   }
@@ -336,6 +347,9 @@ function deleteEntry(){
  * * and handle the response
  */
 function uploadJournal(){
+  //get list 
+  let uploadList = document.getElementById("listEntries");
+  
 
 }
 
