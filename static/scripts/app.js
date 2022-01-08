@@ -25,6 +25,8 @@ document.getElementById("listEntries").addEventListener('click', populateEntry);
 document.getElementById("btnDeleteEntry").addEventListener('click', deleteEntry);
 document.getElementById("btnAddEntry").addEventListener('click', addEntry);
 
+document.getElementById("btnUploadJournal").addEventListener('click', uploadJournal);
+
 // initialise journal list
 document.addEventListener("DOMContentLoaded", function(){
     console.log("calling getJournal")
@@ -220,14 +222,14 @@ function divideNumbersAPI(){
  * * set the content of the "listEntries" element to the formatted string
  */
 function getJournalEntries(){
-  console.log("getting journal entries");
+  //console.log("getting journal entries");
   let xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
-    console.log("xhttp ready state recieved")
+    //console.log("xhttp ready state recieved")
     if (this.readyState == 4 && this.status == 200) { 
-      console.log("ready and OK");
+      //console.log("ready and OK");
       let journalResult = JSON.parse(this.responseText);
-      console.log(journalResult);
+      //console.log(journalResult);
       
       let journalList = "";
       for (let item of journalResult.journals) {
@@ -273,7 +275,7 @@ function clearEntry(){
 function populateEntry(e){
     //clear old entry
     clearEntry()
-    console.log("item: " + e.target);
+    //console.log("item: " + e.target);
     let itemIndex = e.target.id
     let itemDate = e.target.getAttribute("dat");
     let itemName = e.target.getAttribute("name");
@@ -295,7 +297,7 @@ function populateEntry(e){
  */
 function addEntry(){
   let uid = getUniqueKey();
-  console.log("uid: " + uid)
+  //console.log("uid: " + uid)
   const dat = new Date();
   let newDate = dat.getDate() + "/" + dat.getMonth() + "/" + dat.getFullYear();
   console.log("date: " + newDate);
@@ -349,7 +351,44 @@ function deleteEntry(){
 function uploadJournal(){
   //get list 
   let uploadList = document.getElementById("listEntries");
+  var entriesList = uploadList.getElementsByTagName("li")
+  //console.log("entries no. " + entriesList.length)
+  // make object to convert to JSON
+  let uploadObject = {};
+  uploadObject.journals = [];
+  //list items and put into an array of objects
+  //console.log(entriesList)
+  for (let i = 0; i < entriesList.length ; i++){
+    //console.log("upload entry " + entriesList[i].innerHTML);
+    let objEntry = {}
+    objEntry.date = entriesList[i].getAttribute("dat");
+    objEntry.name = entriesList[i].getAttribute("name");
+    objEntry.note = entriesList[i].getAttribute("note");
+    uploadObject.journals.push(objEntry);
+  }
+  //console.log("upload Object:" + JSON.stringify(uploadObject));
+  //console.log(uploadObject.journals[0])
+
+  //convert object to JSON and put to api
+  let xhttp = new XMLHttpRequest();
+  let url = "/api/journal"
   
+    xhttp.onreadystatechange = function() {
+      let strResponse = "Error: no response";
+      if (this.readyState == 4 && this.status == 200) {
+        strResponse = JSON.parse(this.responseText);
+        alert(strResponse.message)
+      }
+      //document.getElementById(elResponse).setAttribute("value",  strResponse.result);
+      
+    };
+    xhttp.open("PUT", url, true);
+    // Converting JSON data to string
+    var data = JSON.stringify(uploadObject)
+    // Set the request header i.e. which type of content you are sending
+    xhttp.setRequestHeader("Content-Type", "application/json");
+    //send it
+    xhttp.send(data);
 
 }
 
