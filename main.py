@@ -133,7 +133,7 @@ def journal():
     """
     # file_name = "data/journal_test.json"
     site_root = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(site_root, "data", "journal_testfile.json")
+    json_url = os.path.join(site_root, "data", "journal.json")
 
     # with keyword deels with closing file etc.
     with open(json_url, 'r') as openfile:
@@ -145,21 +145,32 @@ def journal():
 @app.route("/api/journal", methods=['PUT'])
 def upload():
     print('saving Journal')
-    message = jsonify(message="Journals uploaded!")
+    messageOK = jsonify(message="Journals uploaded!")
+    messageFail = jsonify(message="Uploading Journals failed as dats not in JSON format!")
     if request.is_json:
         # Parse the JSON into a Python dictionary
         req = request.get_json()
-
         # Print the dictionary
         print(req)
+        #save json to file
+        # file_name = "data/journal_test.json"
+        site_root = os.path.realpath(os.path.dirname(__file__))
+        json_url = os.path.join(site_root, "data", "journal.json")
+
+        # with keyword deels with closing file etc.
+        with open(json_url, 'w') as openfile:
+          json.dump(req, openfile)
+           # Reading from json file
+          #json_object = json.load(openfile)
+        #return json_object
 
         # Return a string along with an HTTP status code
-        return message, 200
+        return messageOK, 200
 
     else:
 
         # The request body wasn't JSON so return a 400 HTTP status code
-        return "Request was not JSON", 400
+        return messageFail, 200
 
 
 # run app
