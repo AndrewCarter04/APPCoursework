@@ -56,16 +56,7 @@ function getUniqueKey(){
  */
 function callAPI_calc(url, elResponse) {
     //use the code from the lab task to complete the function
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      let strResponse = "Error: no response";
-      if (this.readyState == 4 && this.status == 200) {
-        strResponse = JSON.parse(this.responseText);
-      }
-      document.getElementById(elResponse).setAttribute("value",  strResponse.result);
-    };
-    xhttp.open("GET", url, true);
-    xhttp.send();
+   
 }
 
 /**
@@ -82,9 +73,7 @@ function callAPI_calc(url, elResponse) {
  */
 function addNumbers(){
     console.log("adding ");
-    let num1 = Number(document.getElementById("add1").value);
-    let num2 = Number(document.getElementById("add2").value);
-    document.getElementById("inputAdd").setAttribute("value",  num1 + num2);
+    
 }
 
 /**
@@ -99,10 +88,7 @@ function addNumbers(){
 function addNumbersAPI(){
     //use the code from the lab task to complete the function
     console.log("adding on API");
-    let num1 = Number(document.getElementById("add1").value);
-    let num2 = Number(document.getElementById("add2").value);
-    let url = "/api/add?num1=" + num1 + "&num2=" + num2;
-    callAPI_calc(url, "inputAdd");
+    
 }
 
 /**
@@ -116,9 +102,7 @@ function addNumbersAPI(){
  */
 function subtractNumbers(){
     console.log("subtracting ");
-    let num1 = Number(document.getElementById("sub1").value);
-    let num2 = Number(document.getElementById("sub2").value);
-    document.getElementById("inputSubtract").setAttribute("value",  num1 - num2);
+    
 }
 
 /**
@@ -132,10 +116,7 @@ function subtractNumbers(){
  */
 function subtractNumbersAPI(){
     console.log("subtracting on API");
-    let num1 = Number(document.getElementById("sub1").value);
-    let num2 = Number(document.getElementById("sub2").value);
-    let url = "/api/subtract?num1=" + num1 + "&num2=" + num2;
-    callAPI_calc(url, "inputSubtract");
+    
 }
 
 /**
@@ -148,10 +129,7 @@ function subtractNumbersAPI(){
  * * set the result element in the html page to display the result of the calculation
  */
 function multiplyNumbers(){
-  console.log("multiplying");
-  let num1 = Number(document.getElementById("multi1").value);
-  let num2 = Number(document.getElementById("multi2").value);
-  document.getElementById("inputMultiply").setAttribute("value",  num1 * num2);
+  
 }
 
 /**
@@ -165,10 +143,7 @@ function multiplyNumbers(){
  */
 function multiplyNumbersAPI(){
   console.log("multiplying on API");
-  let num1 = Number(document.getElementById("multi1").value);
-  let num2 = Number(document.getElementById("multi2").value);
-  let url = "/api/multiply?num1=" + num1 + "&num2=" + num2;
-  callAPI_calc(url, "inputMultiply");
+  
 }
 
 /**
@@ -184,9 +159,7 @@ function multiplyNumbersAPI(){
  */
 function divideNumbers(){
   console.log("dividing");
-  let num1 = Number(document.getElementById("divi1").value);
-  let num2 = Number(document.getElementById("divi2").value);
-  document.getElementById("inputDivide").setAttribute("value",  num1 / num2);
+  
 }
 
 /**
@@ -200,10 +173,7 @@ function divideNumbers(){
  */
 function divideNumbersAPI(){
   console.log("dividing on API");
-  let num1 = Number(document.getElementById("divi1").value);
-  let num2 = Number(document.getElementById("divi2").value);
-  let url = "/api/divide?num1=" + num1 + "&num2=" + num2;
-  callAPI_calc(url, "inputDivide");
+  
 }
 
 /**
@@ -222,28 +192,8 @@ function divideNumbersAPI(){
  * * set the content of the "listEntries" element to the formatted string
  */
 function getJournalEntries(){
-  //console.log("getting journal entries");
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    //console.log("xhttp ready state recieved")
-    if (this.readyState == 4 && this.status == 200) { 
-      //console.log("ready and OK");
-      let journalResult = JSON.parse(this.responseText);
-      //console.log(journalResult);
-      
-      let journalList = "";
-      for (let item of journalResult.journals) {
-        journalList = journalList + "<li dat='" + String(item.date) +  "' name='" + String(item.name) + "' note='" + String(item.note) + "' id='itemEntry" + journalResult.journals.indexOf(item) + "'>" + String(item.date) + "</li>";}
-     
-    document.getElementById("listEntries").innerHTML = journalList;
-    
-    }
-    else{
-      console.log("xhttp request problem occurred")
-    }
-  }
-  xhttp.open("GET", "api/journal", true);
-  xhttp.send();
+  console.log("getting journal entries");
+  
 }
 /**
  * Dont forget to call the function that will retrieve the list entries when the page loads
@@ -257,10 +207,7 @@ function getJournalEntries(){
  *
  */
 function clearEntry(){
-    document.getElementById("idEntry").value = "";
-    document.getElementById("dateEntry").value = "";
-    document.getElementById("namEntry").value = "";
-    document.getElementById("txtNote").value = "";
+    
 }
 
 /**
@@ -274,16 +221,8 @@ function clearEntry(){
  */
 function populateEntry(e){
     //clear old entry
-    clearEntry()
-    //console.log("item: " + e.target);
-    let itemIndex = e.target.id
-    let itemDate = e.target.getAttribute("dat");
-    let itemName = e.target.getAttribute("name");
-    let itemNote = e.target.getAttribute("note");
-    document.getElementById("idEntry").value = itemIndex;
-    document.getElementById("dateEntry").value = itemDate;
-    document.getElementById("namEntry").value = itemName;
-    document.getElementById("txtNote").value = itemNote;
+    
+    
 }
 
 /**
@@ -296,26 +235,9 @@ function populateEntry(e){
  * * append the new node to the list of entries
  */
 function addEntry(){
+  console.log("Add entry")
   let uid = getUniqueKey();
-  //console.log("uid: " + uid)
-  const dat = new Date();
-  let newDate = dat.getDate() + "/" + dat.getMonth() + "/" + dat.getFullYear();
-  console.log("date: " + newDate);
-  let newName = document.getElementById("nameAdd").value;
-  let newNote = document.getElementById("txtAdd").value;
-  if(newName == "" || newNote == ""){
-    alert("Please enter values in the name and the notes inputs.")
-  }else{
-    //create new li item
-    let newEntry = document.createElement('li');
-    newEntry.id = uid;
-    newEntry.setAttribute("dat", newDate)
-    newEntry.setAttribute("name", newName);
-    newEntry.setAttribute("note", newNote);
-    newEntry.innerText = newDate;
-    document.getElementById("listEntries").appendChild(newEntry)
-    alert("Journal entry added to clientsdide list. Upload to save the list.")
-  }
+
 }
 
 /**
@@ -325,16 +247,8 @@ function addEntry(){
  * * delete a journal entry (list item) from the html page
  */
 function deleteEntry(){
-  let idToDelete = document.getElementById("idEntry").value; 
-  if(idToDelete != ""){
-    document.getElementById(idToDelete).remove();
-    //remove deleted details from selected entry boxes
-    clearEntry()
-    alert("Journal entry deleted on clientside. Upload to save changes.")
-  } else {
-    alert("Please select an entry to delete.")
-  }
- 
+  console.log("Delete entry")
+  
 
 }
 
@@ -349,47 +263,8 @@ function deleteEntry(){
  * * and handle the response
  */
 function uploadJournal(){
-  //get list 
-  let uploadList = document.getElementById("listEntries");
-  var entriesList = uploadList.getElementsByTagName("li")
-  //console.log("entries no. " + entriesList.length)
-  // make object to convert to JSON
-  let uploadObject = {};
-  uploadObject.journals = [];
-  //list items and put into an array of objects
-  //console.log(entriesList)
-  for (let i = 0; i < entriesList.length ; i++){
-    //console.log("upload entry " + entriesList[i].innerHTML);
-    let objEntry = {}
-    objEntry.date = entriesList[i].getAttribute("dat");
-    objEntry.name = entriesList[i].getAttribute("name");
-    objEntry.note = entriesList[i].getAttribute("note");
-    uploadObject.journals.push(objEntry);
-  }
-  //console.log("upload Object:" + JSON.stringify(uploadObject));
-  //console.log(uploadObject.journals[0])
-
-  //convert object to JSON and put to api
-  let xhttp = new XMLHttpRequest();
-  let url = "/api/journal"
+  console.log("Upload journal");
   
-    xhttp.onreadystatechange = function() {
-      let strResponse = "Error: no response";
-      if (this.readyState == 4 && this.status == 200) {
-        strResponse = JSON.parse(this.responseText);
-        alert(strResponse.message)
-      }
-      //document.getElementById(elResponse).setAttribute("value",  strResponse.result);
-      
-    };
-    xhttp.open("PUT", url, true);
-    // Converting JSON data to string
-    var data = JSON.stringify(uploadObject)
-    // Set the request header i.e. which type of content you are sending
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    //send it
-    xhttp.send(data);
-
 }
 
 
