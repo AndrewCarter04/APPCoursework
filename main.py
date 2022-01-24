@@ -11,6 +11,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
+    """
+        This code returns the index page to the browser. 
+    """
     return render_template('index.html')
 
 
@@ -26,20 +29,13 @@ def add():
         format the result into JSON
         return the JSON response object
     """
-
+    print("adding on api")
     # add your code here
-    total = 0
+    
     # use request.args.get('variablename') to get sent vars
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    total = num1 + num2
+    
     # end
-    response = make_response(
-        jsonify({"result": str(total)}),
-        200,
-    )
-    response.headers["Content-Type"] = "application/json"
-    return response
+    
 
 
 @app.route("/api/subtract", methods=['GET'])
@@ -52,20 +48,8 @@ def subtract():
         return the JSON response object
     """
     print("subtracting on api")
-    # add your code start line
-    # use request.args.get('variablename') to get vars
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    total = num1 - num2
-    # end
-    print("total = " + str(total))
-    response = make_response(
-        jsonify({"result": str(total)}),
-        200,
-    )
-    response.headers["Content-Type"] = "application/json"
-    print("after response made: " + str(response))
-    return response
+
+    
 
 
 @app.route("/api/multiply", methods=['GET'])
@@ -78,20 +62,8 @@ def multiply():
         return the JSON response object
     """
     print("multiplying on api")
-    # add your code start line
     # use request.args.get('variablename') to get vars
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    total = num1 * num2
-    # end
-    print("total = " + str(total))
-    response = make_response(
-        jsonify({"result": str(total)}),
-        200,
-    )
-    response.headers["Content-Type"] = "application/json"
-    print("after response made: " + str(response))
-    return response
+
 
 
 @app.route("/api/divide", methods=['GET'])
@@ -103,21 +75,8 @@ def divide():
         format the result into JSON
         return the JSON response object
     """
-    # print("dividing on api")
-    # add your code start line
-    # use request.args.get('variablename') to get vars
-    num1 = float(request.args.get('num1'))
-    num2 = float(request.args.get('num2'))
-    total = num1 / num2
-    # end
-    # print("total = " + str(total))
-    response = make_response(
-        jsonify({"result": str(total)}),
-        200,
-    )
-    response.headers["Content-Type"] = "application/json"
-    # print("after response made: " + str(response))
-    return response
+    print("dividing on api")
+   
 
 
 # Journal functions
@@ -131,46 +90,20 @@ def journal():
         format the result into JSON response object
         return the JSON response object
     """
-    # file_name = "data/journal_test.json"
-    site_root = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(site_root, "data", "journal.json")
-
-    # with keyword deels with closing file etc.
-    with open(json_url, 'r') as openfile:
-        # Reading from json file
-        json_object = json.load(openfile)
-    return json_object
+    print("getting journal on api")
+    
 
 
 @app.route("/api/journal", methods=['PUT'])
 def upload():
-    print('saving Journal')
-    messageOK = jsonify(message="Journals uploaded!")
-    messageFail = jsonify(message="Uploading Journals failed as dats not in JSON format!")
-    if request.is_json:
-        # Parse the JSON into a Python dictionary
-        req = request.get_json()
-        # Print the dictionary
-        print(req)
-        #save json to file
-        # file_name = "data/journal_test.json"
-        site_root = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(site_root, "data", "journal.json")
-
-        # with keyword deels with closing file etc.
-        with open(json_url, 'w') as openfile:
-          json.dump(req, openfile)
-           # Reading from json file
-          #json_object = json.load(openfile)
-        #return json_object
-
-        # Return a string along with an HTTP status code
-        return messageOK, 200
-
-    else:
-
-        # The request body wasn't JSON so return a 400 HTTP status code
-        return messageFail, 200
+    """
+    Write a function to
+        receive json data from the request object
+        and save it into the journal.json file
+        return the JSON response object
+    """
+    print('saving Journal on api')
+    
 
 
 # run app
