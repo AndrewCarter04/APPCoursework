@@ -20,6 +20,8 @@ document.getElementById("btnMultiplyAPI").addEventListener("click", multiplyNumb
 document.getElementById("btnDivide").addEventListener("click", divideNumbers);
 document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersAPI);
 
+//journal event handlers
+
 document.getElementById("listEntries").addEventListener('click', populateEntry);
 
 document.getElementById("btnDeleteEntry").addEventListener('click', deleteEntry);
@@ -40,7 +42,7 @@ function getUniqueKey(){
     );
 };
 
-//journal event handlers
+
 
 /**
  * callAPI_calc()
@@ -64,10 +66,10 @@ function callAPI_calc(url, elResponse) {
  */
 /**
  * addNumbers()
- * This function does not use the app.py file to complete the task.
+ * This function does not use the main.py file to complete the task.
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the text box elements on the page (see index.html page for ids of these elements)
  * * perform the calculation
  * * set the result element in the html page to display the result of the calculation
  */
@@ -78,10 +80,10 @@ function addNumbers(){
 
 /**
  * addNumbersAPI()
- * This function should perform the calculation in the app.py file
+ * This function should perform the calculation in the main.py file
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * form a url string with the values as arguments
  * * Use callAPI() function to form and send a request object
  */
@@ -96,7 +98,7 @@ function addNumbersAPI(){
  * This function does not use the app.py file to complete the task.
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * perform the calculation
  * * set the result element in the html page to display the result of the calculation
  */
@@ -107,10 +109,10 @@ function subtractNumbers(){
 
 /**
  * subtractNumbersAPI()
- * This function should perform the calculation in the app.py file
+ * This function should perform the calculation in the main.py file
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * form a url string with the values as arguments
  * * Use callAPI() function to form and send a request object
  */
@@ -121,10 +123,10 @@ function subtractNumbersAPI(){
 
 /**
  * multiplyNumbers()
- * This function should perform the calculation in the app.py file
+ * This function should perform the calculation in the main.py file
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * perform the calculation
  * * set the result element in the html page to display the result of the calculation
  */
@@ -134,10 +136,10 @@ function multiplyNumbers(){
 
 /**
  * multiplyNumbersAPI()
-  * This function should perform the calculation in the app.py file
+  * This function should perform the calculation in the main.py file
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * form a url string with the values as arguments
  * * Use callAPI() function to form and send a request object
  */
@@ -151,7 +153,7 @@ function multiplyNumbersAPI(){
  * This function does not use the app.py file to complete the task.
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * perform the calculation
  * * set the result element in the html page to display the result of the calculation
  * NOTE: once you have this function operational you need to validate the divisor
@@ -164,10 +166,10 @@ function divideNumbers(){
 
 /**
  * divideNumbersAPI()
- * This function should perform the calculation in the app.py file
+ * This function should perform the calculation in the main.py file
  *
  * Write a function that will
- * * retrieve the values from the text box elements on the page
+ * * retrieve the values from the appropriate text box elements on the page
  * * form a url string with the values as arguments
  * * Use callAPI() function to form and send a request object
  */
