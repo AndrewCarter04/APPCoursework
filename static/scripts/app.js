@@ -1,272 +1,250 @@
 /**
  * Application of Principles of Programming
- * Assignment Template 2021 - Javascript
- * @author Tim Orman
+ * Assignment Submission
  */
-console.log("hello from external app.js");
-/**
- * event handlers can go here
- */
-//calculator event handlers - one for each button
-document.getElementById("btnAdd").addEventListener("click", addNumbers);
-document.getElementById("btnAddAPI").addEventListener("click", addNumbersAPI);
-
-document.getElementById("btnSubtract").addEventListener("click", subtractNumbers);
-document.getElementById("btnSubtractAPI").addEventListener("click", subtractNumbersAPI);
-
-document.getElementById("btnMultiply").addEventListener("click", multiplyNumbers);
-document.getElementById("btnMultiplyAPI").addEventListener("click", multiplyNumbersAPI);
-
-document.getElementById("btnDivide").addEventListener("click", divideNumbers);
-document.getElementById("btnDivideAPI").addEventListener("click", divideNumbersAPI);
-
-//journal event handlers
-
-document.getElementById("listEntries").addEventListener('click', populateEntry);
-
-document.getElementById("btnDeleteEntry").addEventListener('click', deleteEntry);
-document.getElementById("btnAddEntry").addEventListener('click', addEntry);
-
-document.getElementById("btnUploadJournal").addEventListener('click', uploadJournal);
-
-// initialise journal list
-document.addEventListener("DOMContentLoaded", function(){
-    console.log("calling getJournal")
-    getJournalEntries();
-});
 
 //utility functions - DO NOT EDIT OR DELETE
-function getUniqueKey(){
+function getUniqueKey() {
     return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
         (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     );
 };
 
-
-
-/**
- * callAPI_calc()
- *
- * This function uses the built-in (to the browser) XMLHttpRequest object to request data from a server
- * The responseText property returns the response from the server as a string.
- *
- * You can use this function to complete calls to the api from the calculator functions.
- * Examine the url and elResponse parameters.
- * What types of values should they contain when passing them as arguments and calling this function?
- * @param url
- * @param elResponse
- */
-function callAPI_calc(url, elResponse) {
-    //use the code from the lab task to complete the function
-   
+// add the description to priorty number, eg: "1 - Highest"
+function getStringPriority(number) {
+  let priority = number;
+  switch (number) {
+    case "1":
+      priority += " - Highest";
+      break;
+    case "2":
+      priority += " - High";
+      break;
+    case "3":
+      priority += " - Medium";
+      break;
+    case "4":
+      priority += " - Low";
+      break;
+    case "5":
+      priority += " - Lowest";
+      break;
+  } 
+  return priority;
 }
 
 /**
- * Calculator Stuff
+ * Event Handlers - had to call them after DOM loaded, otherwise the console was giving a null error for each element
  */
-/**
- * addNumbers()
- * This function does not use the main.py file to complete the task.
- *
- * Write a function that will
- * * retrieve the values from the text box elements on the page (see index.html page for ids of these elements)
- * * perform the calculation
- * * set the result element in the html page to display the result of the calculation
- */
-function addNumbers(){
-    console.log("adding ");
-    
-}
 
-/**
- * addNumbersAPI()
- * This function should perform the calculation in the main.py file
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * form a url string with the values as arguments
- * * Use callAPI() function to form and send a request object
- */
-function addNumbersAPI(){
-    //use the code from the lab task to complete the function
-    console.log("adding on API");
-    
-}
+function addEventHandlers() {
+  
+  document.getElementById("btnUploadList").addEventListener("click", uploadEntries);
 
-/**
- * subtractNumbers()
- * This function does not use the app.py file to complete the task.
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * perform the calculation
- * * set the result element in the html page to display the result of the calculation
- */
-function subtractNumbers(){
-    console.log("subtracting ");
-    
-}
+  //document.getElementById("btnUpdateItem").addEventListener("click", updateEntry);
+  //document.getElementById("btnDeleteItem").addEventListener("click", deleteEntry);
 
-/**
- * subtractNumbersAPI()
- * This function should perform the calculation in the main.py file
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * form a url string with the values as arguments
- * * Use callAPI() function to form and send a request object
- */
-function subtractNumbersAPI(){
-    console.log("subtracting on API");
-    
-}
+  document.getElementById("btnAddEntry").addEventListener("click", addEntry);
 
-/**
- * multiplyNumbers()
- * This function should perform the calculation in the main.py file
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * perform the calculation
- * * set the result element in the html page to display the result of the calculation
- */
-function multiplyNumbers(){
+  document.getElementById("btnSaveEdit").addEventListener("click", saveEditEntry);
   
 }
 
 /**
- * multiplyNumbersAPI()
-  * This function should perform the calculation in the main.py file
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * form a url string with the values as arguments
- * * Use callAPI() function to form and send a request object
+ * Initialisation
  */
-function multiplyNumbersAPI(){
-  console.log("multiplying on API");
+
+document.addEventListener("DOMContentLoaded", function() {
+  addEventHandlers(); // only works after DOM loaded, otherwise null error
+  getToDoEntries();
+});
+
+/**
+ * To-Do List
+ */
+
+function getToDoEntries() {
+
+  //console.log("get todo entries");
   
-}
-
-/**
- * divideNumbers()
- * This function does not use the app.py file to complete the task.
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * perform the calculation
- * * set the result element in the html page to display the result of the calculation
- * NOTE: once you have this function operational you need to validate the divisor
- * and ensure you do not have divide by zero errors.
- */
-function divideNumbers(){
-  console.log("dividing");
+  var xhttp = new XMLHttpRequest();
+  var url = "api/todo";
   
-}
+  xhttp.onreadystatechange = function() {
 
-/**
- * divideNumbersAPI()
- * This function should perform the calculation in the main.py file
- *
- * Write a function that will
- * * retrieve the values from the appropriate text box elements on the page
- * * form a url string with the values as arguments
- * * Use callAPI() function to form and send a request object
- */
-function divideNumbersAPI(){
-  console.log("dividing on API");
-  
-}
+    if (this.readyState == 4 && this.status == 200) {
+      
+      //console.log("ready and OK");
+      
+      let response = JSON.parse(this.responseText);
+      serverJSON = response;
 
-/**
- * Journal Stuff
- */
+      for (let entry of response.entries) {
 
+        let tableRecord = document.createElement("tr");
 
+        tableRecord.id = entry.id;
+        
+        let tableData = "";
 
+        tableData += "<td>" + entry.id + "</td>";
+        tableData += "<td>" + entry.summary + "</td>";
+        tableData += "<td>" + entry.description + "</td>";
+        tableData += "<td>" + getStringPriority(entry.priority) + "</td>";
+        tableData += "<td>" + entry['creation-date'] + "</td>";
+        tableData += "<td>" + entry['due-date'] + "</td>";
 
-/**
- * getJournalEntries() - Get list of journal entries
- *
- * Write a function that will
- * * retrieve the JSON file of journal entries
- * * format the entries into a single string with appropriate html tags
- * * set the content of the "listEntries" element to the formatted string
- */
-function getJournalEntries(){
-  console.log("getting journal entries");
-  
-}
-/**
- * Dont forget to call the function that will retrieve the list entries when the page loads
- */
+        tableData += "<td><button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
+        tableData += "<button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
 
-/**
- * clearEntry()
- *
- * Write a function that will
- * * clear the selected entry inputs
- *
- */
-function clearEntry(){
+        tableRecord.innerHTML = tableData;
+
+        document.getElementById("listTableBody").appendChild(tableRecord);
+
+        document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
+
+        document.getElementById("deleteEntry" + entry.id).addEventListener("click", function() {deleteEntry(entry.id);});
+        
+        // old code - using the list. Replaced by code to use the table
+        /*let element = document.createElement("li");
+        
+        element.setAttribute("entryId", entry.id); // changed from "id", conflict
+        element.setAttribute("summary", entry.summary);
+        element.setAttribute("description", entry.description);
+        element.setAttribute("priority", entry.priority);
+        element.setAttribute("creation-date", entry["creation-date"]); // used square brackets so it is not interpreted as subtraction
+        element.setAttribute("due-date", entry["due-date"]); // used square brackets so it is not interpreted as subtraction
+        element.textContent = entry.summary; // future - include due date
+        
+        document.getElementById("listItems").appendChild(element);*/
+        
+      }
+      
+    }
     
-}
+  }
 
-/**
- * populateEntry(item)
- *
- * Write a function that will
- * * get the data for a single journal entry from item parameter
- * * extract the individual pieces of data from the entry
- * * and put each piece of information into the text fields on the html page
- * @param item
- */
-function populateEntry(e){
-    //clear old entry
-    
-    
-}
-
-/**
- * addEntry() - add a journal entry
- *
- * Write a function that will
- * * create a new node list item element
- * * create a new text node element for the new list item and attach it to the new list item
- * * set other values of the list item - date, class, id, notes, student
- * * append the new node to the list of entries
- */
-function addEntry(){
-  console.log("Add entry")
-  let uid = getUniqueKey();
-
-}
-
-/**
- * deleteEntry()
- *
- * Write a function that will
- * * delete a journal entry (list item) from the html page
- */
-function deleteEntry(){
-  console.log("Delete entry")
-  
-
-}
-
-/**
- * uploadJournal()
- *
- * Write a function that will
- * * get the data from the list entries on the html page
- * * put the entries from the list into a collection
- * * convert the collection into a JSON object
- * * send JSON object to the url in the flask api
- * * and handle the response
- */
-function uploadJournal(){
-  console.log("Upload journal");
+  xhttp.open("GET", url, true);
+  xhttp.send();
   
 }
 
+function editEntry(entry) {
+  console.log("edit entry " + entry);
+}
 
+function saveEditEntry() {
+  // hide div after saving
+}
+
+function deleteEntry(entry) {
+  console.log("delete entry " + entry);
+}
+
+function uploadEntries() {
+
+  var jsonData = {entries:[]};
+  var strData = "";
+
+  var tableBody = document.getElementById("listTableBody");
+  var tableRecords = tableBody.getElementsByTagName("tr");
+
+  // for loop - each list item
+
+  for (let i = 0; i < tableRecords.length; i++) {
+    
+    let tableRecord = tableRecords[i];
+    let tableData = tableRecord.getElementsByTagName("td");
+
+    let jsonEntry = {};
+    
+    jsonEntry.id = tableData[0].innerText;
+    jsonEntry.summary = tableData[1].innerText;
+    jsonEntry.description = tableData[2].innerText;
+    jsonEntry.priority = tableData[3].innerText;
+    // had to use the square bracket method for these two, as they have a "-" in the key
+    jsonEntry['creation-date'] = tableData[4].innerText;
+    jsonEntry['due-date'] = tableData[5].innerText;
+
+    jsonData.entries.push(jsonEntry);
+    
+  }
+  
+  strData = JSON.stringify(jsonData);
+  
+  var xhttp = new XMLHttpRequest();
+  var url = "api/todo";
+  
+  xhttp.onreadystatechange = function() {
+
+    response = {message:"No response from server."}
+    
+    if (this.readyState == 4 && (this.status == 200 || this.status == 400)) {
+
+      response = JSON.parse(this.responseText);
+
+      alert(response.message);
+
+      if(this.status == 200) updateLocalChanges(false);
+      
+    }
+    
+  }
+  
+  xhttp.open("PUT", url, true);
+  xhttp.setRequestHeader("Content-Type", "application/json");
+  xhttp.send(strData);
+  
+}
+
+function addEntry() {
+
+  // input validation goes here
+  
+  var tableRecord = document.createElement("tr");
+  var tableData = "";
+
+  var currentDate = new Date();
+  
+  var id = getUniqueKey();
+  var summary = document.getElementById("txtSummaryEntry").value;
+  var description = document.getElementById("txtDescEntry").value;
+  var priority = getStringPriority(document.getElementById("selectPriorityEntry").value);
+  var creationDate = currentDate.toLocaleDateString('en-GB');
+  var dueDate = new Date(document.getElementById("dateDueEntry").value).toLocaleDateString();
+
+  tableData += "<td>" + id + "</td>";
+  tableData += "<td>" + summary + "</td>";
+  tableData += "<td>" + description + "</td>";
+  tableData += "<td>" + priority + "</td>";
+  tableData += "<td>" + creationDate + "</td>";
+  tableData += "<td>" + dueDate + "</td>";
+
+  tableData += "<td><button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
+        tableData += "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
+  
+  tableRecord.innerHTML = tableData;
+
+  document.getElementById("listTableBody").appendChild(tableRecord);
+
+  document.getElementById("editEntry" + id).addEventListener("click", function() {editEntry(id);});
+
+  document.getElementById("deleteEntry" + id).addEventListener("click", function() {deleteEntry(id);});
+  
+  updateLocalChanges(true);
+  
+}
+
+function updateLocalChanges(localChanges) {
+  
+  var uploadStatus = document.getElementById("uploadChangesStatus");
+  
+  if (!localChanges) {
+    uploadStatus.className = "uploadChangesSaved";
+    uploadStatus.textContent = "All changes saved.";
+  } else {
+    uploadStatus.className = "uploadChangesNotSaved";
+    uploadStatus.textContent = "Changes not saved!";
+  }
+  
+}

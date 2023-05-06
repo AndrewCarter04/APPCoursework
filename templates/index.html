@@ -1,133 +1,205 @@
 <!DOCTYPE html>
 <html>
 
+<!--
+
+  To-do list:
+
+  - SAVED/UNSAVED CHANGES DISPLAY (RED/GREEN) DOES NOT WORK PROPERLY 
+  - Add input validation to both Add and Edit functions 
+  
+  -->
+  
 <head>
 	<title>APP Assignment</title>
-	<link rel="stylesheet" href="static/w3.css">
-	<link rel="stylesheet" href="static/w3-deep-purple-theme.css">
+	<link rel="stylesheet" href="static/css/w3.css">
+	<link rel="stylesheet" href="static/css/w3-theme-blue.css">
+  <link rel="stylesheet" href="static/css/my.css">
+  <script src="static/scripts/app.js"></script>
 </head>
 
 <body>
+  
 	<!-- Navbar -->
-	<div class="w3-container w3-theme w3-card">
-		<h1>Application of Programming Principles Assignment Formative Tasks</h1>
-		<!-- navbar links -->
-		<div class="w3-card w3-theme-d5">
+	<div id="home" class="w3-container w3-theme w3-card">
+		<h1>Application of Programming Principles Assignment Submission</h1>
+		<div id="navbarLinks" class="w3-card w3-theme-d5">
 			<a href="#about">ABOUT</a>
-			<a href="#calculator">CALCULATOR</a>
-			<a href="#journal">JOURNAL</a>
-
+			<a id="todoLink" href="#todo">TO-DO LIST</a>
+      <!-- <div id="todoLinkDropdown">
+        <a href="#list">LIST ITEMS</a>
+        <a href="#selected">SELECTED ITEM</a>
+        <a href="#add">ADD ITEM</a>
+      </div> -->
 		</div>
 	</div>
 
 	<!-- About Section -->
 	<div id="about" class="w3-container">
-		<h3>About APP Assignment</h3>
-		<p>This is the APP unit template site for you to use as a starting point for you calculator and Journal example apps work.</p>
-		<p>It consists of a flask app containg the starter files you will need.</p>
-		<div>
-			<h3>Calculator</h3>
-			<p>This is a lab task that helps you pull what you have learned so far together to build a calcualtor section that
-				uses JS to do the calculation on the client-side. It then goes on to connect the client-side to the server-side for calculation.</p>
-		</div>
-		<div>
-			<h3>Journal</h3>
-			<p>This is a further lab task that takes you through adding, editing and deleting and storing data in a file on the
-				server.
-			</p>
-		</div>
-		<div>
-			<h3>Assignment Task</h3>
-			<p>This is a task where you get to fly solo without guided help. Check the assignment brief for details of the task.</p> <p>You can use the Journal app as a template for your app and you can it to this app or you can start a seperate single page app</p>
-		</div>
-
+    <p>Andrew Carter</p>
+    <p>s5512591</p>
+    <p>COMP4/H</p>
 	</div>
 
-	<!-- Calculator Section -->
-	<div id="calculator" class="w3-container w3-theme-l5">
-		<h2>Calculator</h2>
-		<p>The one who runs the sums</p>
-		<div>
-			<h3>Add</h3>
-			<input type="number" id="add1"/> + <input type="number" id="add2"/> = <input type="text" id="inputAdd"/>
-            <p><button id="btnAdd" class="w3-button w3-theme-d5">Add</button></p>
-            <p><button id="btnAddAPI" class="w3-button w3-theme-d5">Add via API</button></p>
-        </div>
-        <div >
-            <h3>Subtract</h3>
-            <input type="number" id="sub1"/> - <input type="number" id="sub2"/> = <input type="text" id="inputSubtract"/>
-            <p><button id="btnSubtract" class="w3-button w3-theme-d5">Subtract</button></p>
-            <p><button id="btnSubtractAPI" class="w3-button w3-theme-d5"> Subtract via API</button></p>
-        </div>
-        <div >
-            <h3>Multiply</h3>
-            <input type="number" id="multi1"/> x <input type="number" id="multi2"/> = <input type="text" id="inputMultiply"/>
-            <p><button id="btnMultiply" class="w3-button w3-theme-d5">Multiply</button></p>
-            <p><button id="btnMultiplyAPI" class="w3-button w3-theme-d5">Multiply via API</button></p>
-        </div>
-        <div >
-          <h3>Divide</h3>
-            <input type="number" id="divi1"/> / <input type="number" id="divi2"/> = <input type="text" id="inputDivide"/>
-            <p><button id="btnDivide" class="w3-button w3-theme-d5">Divide</button></p>
-            <p><button id="btnDivideAPI" class="w3-button w3-theme-d5">Divide via API</button></p>
-        </div>
-    </div>
+  <!-- To-Do List Section -->
+  <div id="todo" class="w3-container w3-theme-l4">
+    <h2>To-Do List</h2>
+    <div>
+        <h3 id="list">List Items</h3>
 
-    <!-- Journal Section -->
-    <div id="journal" class="w3-container w3-theme-l4 ">
-        <h2>Journal</h2>
-        <p>What I've done</p>
-        <div>
-            <h3>Journal Entries</h3>
-            <ol id="listEntries" class="w3-ul w3-card w3-hoverable w3-theme-l4">
-              <li>item 1</li>
-              <li>item 2</li>
-            </ol>
-        </div>
-        <div>
-            <button id="btnUploadJournal" class="w3-button w3-theme-d5 w3-margin-top">upload journal</button>
-        </div>
+        <!-- Sort by and filter stuff will go here (additional feature) -->
+
+        <table id="listTable" class="w3-table-all">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Summary</th>
+              <th>Description</th>
+              <th>Priority</th>
+              <th>Creation Date</th>
+              <th>Due Date</th>
+              <th>Edit/Delete</th>
+            </tr>
+          </thead>
+          <tbody id="listTableBody">
+            <!-- Table Entries are added here using JS -->
+          </tbody>
+        </table>
+      
+        <!-- <ol id="listItems" class="w3-ul w3-card w3-hoverable w3-theme-l4"> -->
+          <!-- List items are added here using JS -->
+        <!-- </ol> -->
+    </div>
     
-        <div id="journalItem" >
-          <h3>Selected Entry</h3>
+    <div>
+      <button id="btnUploadList" class="w3-button w3-theme-d5 w3-margin-top">Upload List</button>
+      <p id="uploadChangesStatus" class="uploadChangesSaved">All changes saved.</p>
+    </div>
+    
+    <div id="editEntry" class="hiddenByDefault">
+      <h3>Edit Item</h3>
+      <div>
+        <div>
+          <label for="txtIdEntry">ID: </label>
+          <input type="text" id="txtIdEntry" class="w3-input w3-border w3-round" disabled>
+        </div>
+              
+        <div>
+          <label for="txtSummaryEntry">Summary: </label>
+          <input type="text" id="txtSummaryEntry" class="w3-input w3-border w3-round" disabled>
+        </div>
+              
+        <label for="txtDescEntry">Description: </label>
+        <textarea id="txtDescEntry" rows="5" cols="50" class="w3-input w3-border w3-round" disabled></textarea>
+
+        <label for="selectPriorityEntry">Priority: </label>
+        <div>
+          <select id="selectPriorityEntry" disabled>
+            <option value="1">1 - Highest</option>
+            <option value="2">2 - High</option>
+            <option value="3" selected>3 - Medium</option>
+            <option value="4">4 - Low</option>
+            <option value="5">5 - Lowest</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="dateCreatedEntry">Creation Date:</label>
+          <input type="date" id="dateCreatedEntry" class="w3-input w3-border w3-round" disabled>
+        </div>
+          
+        <div>
+          <label for="dateDueEntry">Due Date:</label>
+          <input type="date" id="dateDueEntry" class="w3-input w3-border w3-round" disabled>
+        </div>
+
+        <button id="btnSaveEdit" class="w3-button w3-theme-d5 w3-margin-top">Save</button>
+        
+      </div>
+      
+    </div>
+    
+    <!-- <div>
+      <div> 
+        <button id="btnUpdateItem" class="w3-button w3-theme-d5 w3-margin-top">Update</button>
+        <button id="btnDeleteItem" class="w3-button w3-theme-d5 w3-margin-top">Delete</button>
+      </div>
+    </div> -->
+
+    <div id="add">
+        <h3>Add Item</h3>
+
+      <div>
             <div>
-                <div><label for="idEntry">ID: </label>
-                <input type="text" id="idEntry" class="w3-input w3-border w3-round" disabled></div>
-                <div><label for="dateEntry">Date: </label>
-                <input type="text" id="dateEntry" class="w3-input w3-border w3-round" disabled></div>
-                <label for="namEntry">Name: </label>
-                <div><input type="text" id="namEntry" class="w3-input w3-border w3-round" disabled></div>
-                <label for="txtNote">Notes: </label>
-                <textarea id="txtNote" name="txtNote" rows="4" cols="50" class="w3-input w3-border w3-round" disabled></textarea>
+              <label for="txtIdEntry">ID: </label>
+              <input type="text" id="txtIdEntry" class="w3-input w3-border w3-round" value="Auto Generated" disabled>
+            </div>
+              
+            <div>
+              <label for="txtSummaryEntry">Summary: </label>
+              <input type="text" id="txtSummaryEntry" class="w3-input w3-border w3-round" required>
+            </div>
+              
+            <label for="txtDescEntry">Description: </label>
+            <textarea id="txtDescEntry" rows="5" cols="50" class="w3-input w3-border w3-round" required></textarea>
+
+            <label for="selectPriorityEntry">Priority: </label>
+            <div>
+              <select id="selectPriorityEntry" required>
+                <option value="1">1 - Highest</option>
+                <option value="2">2 - High</option>
+                <option value="3" selected>3 - Medium</option>
+                <option value="4">4 - Low</option>
+                <option value="5">5 - Very Low</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="dateCreatedEntry">Creation Date:</label>
+              <input type="text" id="dateCreatedEntry" class="w3-input w3-border w3-round" value="Auto Generated" disabled>
+            </div>
+          
+            <div>
+              <label for="dateDueEntry">Due Date:</label>
+              <input type="date" id="dateDueEntry" class="w3-input w3-border w3-round" required>
+            </div>
+
+            <div>
+              <button id="btnAddEntry" class="w3-button w3-theme-d5 w3-margin-top">Add</button>
             </div>
         </div>
-        <div>
-          <div> <button id="btnDeleteEntry" class="w3-button w3-theme-d5 w3-margin-top">Delete</button></div>
-        </div>
-    
-
-        <div id="addItem" >
-            <h3>Add Entry</h3>
-            <div>
-                <div><label for="idEntry">ID:</label>
-                <input type="text" id="idAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled required></div>
-                <div><label for="dateEntry">Date: </label>
-                <input type="text" id="dateAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled  required></div>
-                <div><label for="nameEntry">Name: </label>
-                <input type="text" id="nameAdd" class="w3-input w3-border w3-round" required></div>
-                <label for="txtEntry">Notes: </label>
+      
+        <!-- <div>
+          <div>
+            <label for="idEntry">ID:</label>
+            <input type="text" id="idAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled required>
+          </div>
+          
+          <div>
+            <label for="dateEntry">Date: </label>
+            <input type="text" id="dateAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled  required>
+          </div>
+          
+          <div>
+            <label for="nameEntry">Name: </label>
+            <input type="text" id="nameAdd" class="w3-input w3-border w3-round" required>
+          </div>
+          
+            <label for="txtEntry">Notes: </label>
             <textarea id="txtAdd" name="txtAdd" rows="4" cols="50" class="w3-input w3-border w3-round" required></textarea>
         </div>
-        <div>
-            <button id="btnAddEntry" class="w3-button w3-theme-d5 w3-margin-top">Add</button>
-        </div>
-    </div>
-    </div>
-    <!-- Footer -->
-    <footer class="w3-footer w3-theme-d1 w3-margin-top">
-      <a href="#home">To the top</a>
-    </footer>
+      
+      <div>
+        <button id="btnAddEntry" class="w3-button w3-theme-d5 w3-margin-top">Add</button>
+      </div>
+      
+    </div> -->
+  </div>
+  
+  <!-- Footer -->
+  <footer class="w3-footer w3-theme-d1 w3-margin-top">
+    <a href="#home">To the top</a>
+  </footer>
 
-<script src="static/scripts/app.js"></script>
 </body>
 </html>

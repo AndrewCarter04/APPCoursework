@@ -1,111 +1,64 @@
 """
- Application of Programming Principles
- Assignment Formative tasks Template 2021-22 - Flask & Python
- 
+Application of Programming Principles Assignment
 """
 from flask import Flask, render_template, jsonify, request, make_response
 import sys, json, os
 
 app = Flask(__name__)
 
-
+"""
+Render Index Page
+"""
 @app.route('/')
 def home():
-    """
-        This code returns the index page to the browser. 
-    """
     return render_template('index.html')
 
 
-# calculator
+"""
+Get all To-Do List entries
+"""
+@app.route('/api/todo', methods=['GET'])
+def get_todo():
+
+  folder_path = os.path.realpath(os.path.dirname(__file__))
+  file_path = os.path.join(folder_path, "data", "todo.json")
+
+  error_msg = jsonify(message="Error loading to-do list entries.")
+
+  with open(file_path, 'r') as file:
+      return json.load(file)
+
+  return error_msg
 
 
-@app.route("/api/add", methods=['GET'])
-def add():
-    """
-    Write a function to
-        receive values from the request object
-        complete the calculation
-        format the result into JSON
-        return the JSON response object
-    """
-    print("adding on api")
-    # add your code here
-    
-    # use request.args.get('variablename') to get sent vars
-    
-    # end
-    
+"""
+Save all To-Do List entries
+"""
+@app.route('/api/todo', methods=['PUT'])
+def set_todo():
+
+  folder_path = os.path.realpath(os.path.dirname(__file__))
+  file_path = os.path.join(folder_path, "data", "todo.json")
+  
+  success_msg = jsonify(message="Upload successful!")
+  fail_msg = jsonify(message="Upload failed.")
+
+  if request.is_json:
+
+    data = request.get_json()
+
+    with open(file_path, 'w') as file:
+      json.dump(data, file)
+
+    return success_msg, 200
+
+  else:
+
+    return fail_msg, 400
 
 
-@app.route("/api/subtract", methods=['GET'])
-def subtract():
-    """
-    Write a function to
-        receive values from the request object
-        complete the calculation
-        format the result into JSON
-        return the JSON response object
-    """
-    print("subtracting on api")
-
-    
-
-
-@app.route("/api/multiply", methods=['GET'])
-def multiply():
-    """
-    Write a function to
-        receive values from the request object
-        complete the calculation
-        format the result into JSON
-        return the JSON response object
-    """
-    print("multiplying on api")
-    # use request.args.get('variablename') to get vars
-
-
-
-@app.route("/api/divide", methods=['GET'])
-def divide():
-    """
-    Write a function to
-        receive values from the request object
-        complete the calculation
-        format the result into JSON
-        return the JSON response object
-    """
-    print("dividing on api")
-   
-
-
-# Journal functions
-
-
-@app.route("/api/journal", methods=['GET'])
-def journal():
-    """
-    Write a function to
-        read the entries in the file containing the journal entries in the data folder
-        format the result into JSON response object
-        return the JSON response object
-    """
-    print("getting journal on api")
-    
-
-
-@app.route("/api/journal", methods=['PUT'])
-def upload():
-    """
-    Write a function to
-        receive json data from the request object
-        and save it into the journal.json file
-        return the JSON response object
-    """
-    print('saving Journal on api')
-    
-
-
-# run app
+"""
+Run Flask
+"""
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)

@@ -1,0 +1,27 @@
+/* #navbarLinks:hover #todoLinkDropdown {
+  display: block;
+}
+
+#todoLinkDropdown:hover {
+  display: block;
+}
+
+#todoLinkDropdown {
+  display: none;
+} */
+
+.hiddenByDefault {
+  display: none;
+}
+
+#uploadChangesStatus {
+  font-size: 20px;
+}
+
+.uploadChangesSaved {
+  color: green;
+}
+
+.uploadChangesNotSaved {
+  color: red;
+}
