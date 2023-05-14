@@ -303,7 +303,7 @@ function editEntry(entry) {
 
 /**
  * Save the local edits to the DOM, removing the ability to edit the entry
- * @param {String} entry - the ID of the entry to be edited
+ * @param {String} entry - the ID of the entry to be saved to the DOM
  */
 function updateEntry(entry) {
   
@@ -341,7 +341,7 @@ function updateEntry(entry) {
 
 /**
  * Delete an entry from the DOM
- * @param {String} entry - the ID of the entry to be edited
+ * @param {String} entry - the ID of the entry to be deleted
  */
 function deleteEntry(entry) {
 
