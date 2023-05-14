@@ -20,7 +20,7 @@ Get all To-Do List entries
 """
 @app.route('/api/todo', methods=['GET'])
 def get_todo():
-  """Get the 'todo' JSON file from the 'data' folder, then return it"""
+  """Get the 'todo' JSON file from the 'data' folder, then return its contents as a String"""
   
   folder_path = os.path.realpath(os.path.dirname(__file__))
   file_path = os.path.join(folder_path, "data", "todo.json")
