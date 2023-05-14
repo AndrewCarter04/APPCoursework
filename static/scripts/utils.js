@@ -14,7 +14,7 @@ function getUniqueKey() {
  * @example
  * // returns "1 - Highest" 
  * getStringPriority(1);
- * @param number - The string priority number
+ * @param {String} number - The priority number
  * @returns {String} - The priority with the relevant description concatenated
 */
 function getStringPriority(number) {
@@ -39,6 +39,10 @@ function getStringPriority(number) {
   return priority;
 }
 
+/**
+ * Check to see if any of the entries are currently being edited by the user
+ * @returns {Boolean} - If any of the entries are currently being edited
+ */
 function isEditing() {
 
   var editing = false;
@@ -57,6 +61,10 @@ function isEditing() {
   
 }
 
+/**
+ * Sets the 'Changed saved' text to display the relevant information
+ * @param {Boolean} localChanges - If there are local changes or not
+ */
 function updateLocalChanges(localChanges) {
   
   var uploadStatus = document.getElementById("uploadChangesStatus");
