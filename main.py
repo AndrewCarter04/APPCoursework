@@ -1,8 +1,8 @@
 """
 Application of Programming Principles Assignment
 """
-from flask import Flask, render_template, jsonify, request, make_response
-import sys, json, os
+from flask import Flask, render_template, jsonify, request
+import json, os
 
 app = Flask(__name__)
 
