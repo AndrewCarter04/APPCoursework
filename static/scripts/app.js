@@ -1,12 +1,13 @@
-/**
+/*
  * Application of Principles of Programming
  * Assignment Submission
  *
  * UTILITY FUNCTIONS ARE STORED IN 'utils.js'
  */
 
-/**
- * Event Handlers - had to call them after DOM loaded, otherwise the console was giving a null error for each element
+/*
+ * Event Handlers - had to call them after DOM loaded, otherwise the 
+ * console was giving a null error for each element
  */
 
 function addEventHandlers() {
