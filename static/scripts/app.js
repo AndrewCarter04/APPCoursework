@@ -10,6 +10,9 @@
  * console was giving a null error for each element
  */
 
+/**
+ * Adds all the on click event listeners for the buttons. Run when the DOM has loaded
+ */
 function addEventHandlers() {
   
   document.getElementById("btnUploadList").addEventListener("click", uploadEntries);
@@ -18,10 +21,9 @@ function addEventHandlers() {
   
 }
 
-/**
+/*
  * Initialisation
  */
-
 document.addEventListener("DOMContentLoaded", function() {
   addEventHandlers(); // only works after DOM loaded, otherwise null error
   getToDoEntries();
@@ -33,7 +35,9 @@ document.addEventListener("DOMContentLoaded", function() {
  *
  */
 
-// Get entries via API and insert them into the DOM
+/**
+ * Gets the to-do list entries via the Flask API, and create the relevant table records in the DOM to display the data, and allow it to be edited or deleted
+ */
 function getToDoEntries() {
   
   var xhttp = new XMLHttpRequest();
@@ -41,26 +45,26 @@ function getToDoEntries() {
   
   xhttp.onreadystatechange = function() {
 
+    // ready and OK
     if (this.readyState == 4 && this.status == 200) {
       
       let response = JSON.parse(this.responseText);
-      serverJSON = response;
 
       for (let entry of response.entries) {
-
+        // create table record element
         let tableRecord = document.createElement("tr");
 
         tableRecord.id = "tableRecord" + entry.id;
-        
-        let tableData = "";
 
-        tableData += "<td>" + entry.id + "</td>";
+        let tableData = "<td>" + entry.id + "</td>";
         tableData += "<td>" + entry.summary + "</td>";
         tableData += "<td>" + entry.description + "</td>";
         tableData += "<td>" + getStringPriority(entry.priority) + "</td>";
+        // had to use the square bracket method, as there is a '-' in the key
         tableData += "<td>" + entry['creation-date'] + "</td>";
         tableData += "<td>" + entry['due-date'] + "</td>";
 
+        // button inner HTML
         tableData += "<td><button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
         tableData += "<button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
 
@@ -68,8 +72,8 @@ function getToDoEntries() {
 
         document.getElementById("listTableBody").appendChild(tableRecord);
 
+        // add event listeners for the 'edit' and 'delete' buttons in the table
         document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
-
         document.getElementById("deleteEntry" + entry.id).addEventListener("click", function() {deleteEntry(entry.id);});
         
       }
@@ -78,15 +82,16 @@ function getToDoEntries() {
     
   }
 
+  // send the request
   xhttp.open("GET", url, true);
   xhttp.send();
   
 }
 
-// extract entries from the DOM and upload them via the API
+/**
+ * Extracts the to-do entries from the DOM, puts it into JSON format, and then uploads it to the Flask API
+ */
 function uploadEntries() {
-
-  //console.log(isEditing());
 
   if (!isEditing()) {
   
@@ -94,11 +99,13 @@ function uploadEntries() {
     var strData = "";
 
     var tableBody = document.getElementById("listTableBody");
+    // get array of all table records
     var tableRecords = tableBody.getElementsByTagName("tr");
 
     for (let i = 0; i < tableRecords.length; i++) {
     
       let tableRecord = tableRecords[i];
+      // get array of all table data entries
       let tableData = tableRecord.getElementsByTagName("td");
 
       let jsonEntry = {};
@@ -111,10 +118,12 @@ function uploadEntries() {
       jsonEntry['creation-date'] = tableData[4].innerText;
       jsonEntry['due-date'] = tableData[5].innerText;
 
+      // add the JSON entry to the 'entries' JSON Array
       jsonData.entries.push(jsonEntry);
     
     }
   
+    // convert the JSON to a string, as it can only be sent as a string
     strData = JSON.stringify(jsonData);
   
     var xhttp = new XMLHttpRequest();
@@ -122,20 +131,24 @@ function uploadEntries() {
   
     xhttp.onreadystatechange = function() {
 
+      // default response
       response = {message:"No response from server."}
     
+      // ready and (OK or Failed)
       if (this.readyState == 4 && (this.status == 200 || this.status == 400)) {
 
         response = JSON.parse(this.responseText);
 
         alert(response.message);
 
+        // only change local changes boolean if status is OK
         if (this.status == 200) updateLocalChanges(false);
       
       }
     
     }
   
+    // send the data
     xhttp.open("PUT", url, true);
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.send(strData);
@@ -154,24 +167,31 @@ function uploadEntries() {
  *
  */
 
-// change the table record to input boxes rather than text, so it can be edited
+/**
+ * Change the table record to allow user input
+ * @param {String} entry - the ID of the entry to be edited
+ */
 function editEntry(entry) {
-  console.log("edit entry id " + entry);
+
+  // get specific table record
   var tableRecord = document.getElementById("tableRecord" + entry);
+  // get all table data entries
   var trChildren = tableRecord.querySelectorAll("td");
 
+  // set first 3 input text boxes
   trChildren[0].innerHTML = "<input type='text' id='txtIdEntry" + entry + "' class='w3-input w3-border w3-round' value='" + trChildren[0].innerText + "' disabled>";
   trChildren[1].innerHTML = "<input type='text' id='txtSummaryEntry" + entry + "' class='w3-input w3-border w3-round' value='" + trChildren[1].innerText + "'>";
   trChildren[2].innerHTML = "<input type='text' id='txtDescEntry" + entry + "' class='w3-input w3-border w3-round' value='" + trChildren[2].innerText + "'>";
 
   var priorityStr = trChildren[3].innerText.charAt(0);
+  // build a select HTML element string
   var priorityHTML = "<select id='selectPriorityEntry" + entry + "'>";
-  
-  // for loop, 1-5, selected to the current one
 
+  // 1 to 5 inclusive
   for (var i = 1; i < 6; i++) {
     fullPriorityStr = i.toString();
     if (i.toString() == priorityStr) {
+      // if equal to the current value, set it to selected
       priorityHTML += "<option value='" + i.toString() + "' selected>";
     } else {
       priorityHTML += "<option value='" + i.toString() + "'>";
@@ -183,27 +203,37 @@ function editEntry(entry) {
 
   trChildren[3].innerHTML = priorityHTML;
   
+  // create arrays which contain the day of month, month and year
   var creationDateArr = trChildren[4].innerText.split("/");
   var dueDateArr = trChildren[5].innerText.split("/");
 
+  // create string dates in the correct format to be understood by the input type date
   var creationDate = creationDateArr[2] + "-" + creationDateArr[1] + "-" + creationDateArr[0];
   var dueDate = dueDateArr[2] + "-" + dueDateArr[1] + "-" + dueDateArr[0];
   
   trChildren[4].innerHTML = "<input type='date' id='dateCreatedEntry" + entry + "' class='w3-input w3-border w3-round' value='" + creationDate + "' disabled>";
   trChildren[5].innerHTML = "<input type='date' id='dateDueEntry" + entry + "' class='w3-input w3-border w3-round' value='" + dueDate + "'>"; 
 
+  // create a save button
   trChildren[6].innerHTML = "<button id='saveEntry" + entry + "' class='w3-button w3-theme-d5 w3-margin-top'>Save</button>";
 
+  // add an event listener for the save button
   document.getElementById("saveEntry" + entry).addEventListener("click", function() {updateEntry(entry);});
   
 }
 
-// save the local changes to the DOM
+/**
+ * Save the local edits to the DOM, removing the ability to edit the entry
+ * @param {String} entry - the ID of the entry to be edited
+ */
 function updateEntry(entry) {
-  console.log("update entry id " + entry);
+  
+  // get specific table record
   var tableRecord = document.getElementById("tableRecord" + entry);
+  // get all table data entries
   var trChildren = tableRecord.querySelectorAll("td");
 
+  // get all the entry data
   var id = trChildren[0].querySelector("input").getAttribute("value");
   var summary = trChildren[1].querySelector("input").getAttribute("value");
   var description = trChildren[2].querySelector("input").getAttribute("value");
@@ -211,6 +241,7 @@ function updateEntry(entry) {
   var creationDate = new Date(trChildren[4].querySelector("input").value).toLocaleDateString('en-GB');
   var dueDate = new Date(trChildren[5].querySelector("input").value).toLocaleDateString('en-GB');
   
+  // set all the entry data, with no HTML tag, as it is already in a '<td>' tag
   trChildren[0].innerHTML = id;
   trChildren[1].innerHTML = summary;
   trChildren[2].innerHTML = description;
@@ -218,20 +249,24 @@ function updateEntry(entry) {
   trChildren[4].innerHTML = creationDate;
   trChildren[5].innerHTML = dueDate;
 
+  // add edit and delete buttons
   trChildren[6].innerHTML = "<button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>" + "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button>";
   
+  // add event listeners for edit and delete buttons
   document.getElementById("editEntry" + id).addEventListener("click", function() {editEntry(id);});
-
   document.getElementById("deleteEntry" + id).addEventListener("click", function() {deleteEntry(id);});
   
   updateLocalChanges(true);
   
 }
 
-// delete an entry from the DOM
+/**
+ * Delete an entry from the DOM
+ * @param {String} entry - the ID of the entry to be edited
+ */
 function deleteEntry(entry) {
-  console.log("delete entry " + entry);
 
+  // confirmation window, to prevent accidental clicks
   if (confirm("To confirm deletion of entry, press 'OK'.")) {
 
     var tableRecord = document.getElementById("tableRecord" + entry);
@@ -252,6 +287,9 @@ function deleteEntry(entry) {
  *
  */
 
+/**
+ * Add a new entry to the DOM
+ */
 function addEntry() {
 
   // input validation goes here
@@ -278,15 +316,16 @@ function addEntry() {
   tableData += "<td>" + creationDate + "</td>";
   tableData += "<td>" + dueDate + "</td>";
 
+  // create edit and delete buttons
   tableData += "<td><button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
-        tableData += "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
+  tableData += "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
   
   tableRecord.innerHTML = tableData;
 
   document.getElementById("listTableBody").appendChild(tableRecord);
 
+  // add event listeners for edit and delete buttons
   document.getElementById("editEntry" + id).addEventListener("click", function() {editEntry(id);});
-
   document.getElementById("deleteEntry" + id).addEventListener("click", function() {deleteEntry(id);});
   
   updateLocalChanges(true);
