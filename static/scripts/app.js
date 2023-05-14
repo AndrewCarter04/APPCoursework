@@ -292,42 +292,58 @@ function deleteEntry(entry) {
  */
 function addEntry() {
 
-  // input validation goes here
-  
-  var tableRecord = document.createElement("tr");
-  var tableData = "";
+  // input validation
+  var validInputs = true;
 
-  var currentDate = new Date();
-  var inputDueDate = new Date(document.getElementById("dateDueEntry").value);
-  
-  var id = getUniqueKey();
-  var summary = document.getElementById("txtSummaryEntry").value;
-  var description = document.getElementById("txtDescEntry").value;
-  var priority = getStringPriority(document.getElementById("selectPriorityEntry").value);
-  var creationDate = currentDate.toLocaleDateString('en-GB');
-  var dueDate = inputDueDate.toLocaleDateString('en-GB');
+  if (document.getElementById("txtSummaryEntry").value == "") {
+    validInputs = false;
+    alert("Please enter a summary!");
+  } else if (document.getElementById("txtDescEntry").value == "") {
+    validInputs = false;
+    alert("Please enter a description!");
+  } else if (document.getElementById("dateDueEntry").value == "") {
+    validInputs = false;
+    alert("Please enter a due date!");
+  }
 
-  tableRecord.setAttribute("id", "tableRecord" + id);
+  if (validInputs) {
   
-  tableData += "<td>" + id + "</td>";
-  tableData += "<td>" + summary + "</td>";
-  tableData += "<td>" + description + "</td>";
-  tableData += "<td>" + priority + "</td>";
-  tableData += "<td>" + creationDate + "</td>";
-  tableData += "<td>" + dueDate + "</td>";
+    var tableRecord = document.createElement("tr");
+    var tableData = "";
 
-  // create edit and delete buttons
-  tableData += "<td><button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
-  tableData += "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
+    var currentDate = new Date();
+    var inputDueDate = new Date(document.getElementById("dateDueEntry").value);
   
-  tableRecord.innerHTML = tableData;
+    var id = getUniqueKey();
+    var summary = document.getElementById("txtSummaryEntry").value;
+    var description = document.getElementById("txtDescEntry").value;
+    var priority = getStringPriority(document.getElementById("selectPriorityEntry").value);
+    var creationDate = currentDate.toLocaleDateString('en-GB');
+    var dueDate = inputDueDate.toLocaleDateString('en-GB');
 
-  document.getElementById("listTableBody").appendChild(tableRecord);
-
-  // add event listeners for edit and delete buttons
-  document.getElementById("editEntry" + id).addEventListener("click", function() {editEntry(id);});
-  document.getElementById("deleteEntry" + id).addEventListener("click", function() {deleteEntry(id);});
+    tableRecord.setAttribute("id", "tableRecord" + id);
   
-  updateLocalChanges(true);
+    tableData += "<td>" + id + "</td>";
+    tableData += "<td>" + summary + "</td>";
+    tableData += "<td>" + description + "</td>";
+    tableData += "<td>" + priority + "</td>";
+    tableData += "<td>" + creationDate + "</td>";
+    tableData += "<td>" + dueDate + "</td>";
+
+    // create edit and delete buttons
+    tableData += "<td><button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
+    tableData += "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
+  
+    tableRecord.innerHTML = tableData;
+
+    document.getElementById("listTableBody").appendChild(tableRecord);
+
+    // add event listeners for edit and delete buttons
+    document.getElementById("editEntry" + id).addEventListener("click", function() {editEntry(id);});
+    document.getElementById("deleteEntry" + id).addEventListener("click", function() {deleteEntry(id);});
+  
+    updateLocalChanges(true);
+
+  }
   
 }
