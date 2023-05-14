@@ -61,23 +61,6 @@ def set_todo():
 
 
 """
-Docs routes
-"""
-@app.route('/docs')
-def docs():
-  """Return the simple page with 2 links, one to python docs, and one to JS docs"""
-  return render_template("docs/docs.html")
-
-@app.route('/docs/py')
-def docs_python():
-  """Render pydoc HTML files"""
-  return render_template("docs/python/main.html")
-
-@app.route('/docs/js')
-def docs_javascript():
-  return render_template("docs/javascript/global.html")
-
-"""
 Run Flask
 """
 if __name__ == '__main__':
