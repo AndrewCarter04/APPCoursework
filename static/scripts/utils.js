@@ -10,9 +10,12 @@ function getUniqueKey() {
 };
 
 /** 
-Adds the description to priorty number, eg: "1 - Highest"
-@param number - The string priority number
-@returns {String} - The priority with the relevant description concatenated
+ * Adds the description to priorty number
+ * @example
+ * // returns "1 - Highest" 
+ * getStringPriority(1);
+ * @param number - The string priority number
+ * @returns {String} - The priority with the relevant description concatenated
 */
 function getStringPriority(number) {
   let priority = number;
