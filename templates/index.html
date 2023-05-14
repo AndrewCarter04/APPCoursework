@@ -5,18 +5,18 @@
 
   To-do list:
 
-  - SAVED/UNSAVED CHANGES DISPLAY (RED/GREEN) DOES NOT WORK PROPERLY 
   - Add input validation to both Add and Edit functions 
   - PYDOC-FORK, JS-DOCK ETC 
-  - DON'T LET USER UPLOAD LIST WHILE EDITING AN ENTRY, AS IT WILL BREAK
   
   -->
   
 <head>
 	<title>APP Assignment</title>
+  <!-- CSS -->
 	<link rel="stylesheet" href="static/css/w3.css">
 	<link rel="stylesheet" href="static/css/w3-theme-blue.css">
   <link rel="stylesheet" href="static/css/my.css">
+  <!-- JavaScript -->
   <script src="static/scripts/app.js"></script>
 </head>
 
@@ -27,12 +27,7 @@
 		<h1>Application of Programming Principles Assignment Submission</h1>
 		<div id="navbarLinks" class="w3-card w3-theme-d5">
 			<a href="#about">ABOUT</a>
-			<a id="todoLink" href="#todo">TO-DO LIST</a>
-      <!-- <div id="todoLinkDropdown">
-        <a href="#list">LIST ITEMS</a>
-        <a href="#selected">SELECTED ITEM</a>
-        <a href="#add">ADD ITEM</a>
-      </div> -->
+			<a href="#todo">TO-DO LIST</a>
 		</div>
 	</div>
 
@@ -49,7 +44,7 @@
     <div>
         <h3 id="list">List Items</h3>
 
-        <!-- Sort by and filter stuff will go here (additional feature) -->
+        <!-- Sort by and filter buttons will go here (additional feature) -->
 
         <table id="listTable" class="w3-table-all">
           <thead>
@@ -67,10 +62,6 @@
             <!-- Table Entries are added here using JS -->
           </tbody>
         </table>
-      
-        <!-- <ol id="listItems" class="w3-ul w3-card w3-hoverable w3-theme-l4"> -->
-          <!-- List items are added here using JS -->
-        <!-- </ol> -->
     </div>
     
     <div>
@@ -78,55 +69,7 @@
       <p id="uploadChangesStatus" class="uploadChangesSaved">All changes saved.</p>
     </div>
     
-    <div id="editEntry" class="hiddenByDefault">
-      <h3>Edit Item</h3>
-      <div>
-        <div>
-          <label for="txtIdEntry">ID: </label>
-          <input type="text" id="txtIdEntry" class="w3-input w3-border w3-round" disabled>
-        </div>
-              
-        <div>
-          <label for="txtSummaryEntry">Summary: </label>
-          <input type="text" id="txtSummaryEntry" class="w3-input w3-border w3-round" disabled>
-        </div>
-              
-        <label for="txtDescEntry">Description: </label>
-        <textarea id="txtDescEntry" rows="5" cols="50" class="w3-input w3-border w3-round" disabled></textarea>
-
-        <label for="selectPriorityEntry">Priority: </label>
-        <div>
-          <select id="selectPriorityEntry" disabled>
-            <option value="1">1 - Highest</option>
-            <option value="2">2 - High</option>
-            <option value="3" selected>3 - Medium</option>
-            <option value="4">4 - Low</option>
-            <option value="5">5 - Lowest</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="dateCreatedEntry">Creation Date:</label>
-          <input type="date" id="dateCreatedEntry" class="w3-input w3-border w3-round" disabled>
-        </div>
-          
-        <div>
-          <label for="dateDueEntry">Due Date:</label>
-          <input type="date" id="dateDueEntry" class="w3-input w3-border w3-round" disabled>
-        </div>
-
-        <button id="btnSaveEdit" class="w3-button w3-theme-d5 w3-margin-top">Save</button>
-        
-      </div>
-      
-    </div>
     
-    <!-- <div>
-      <div> 
-        <button id="btnUpdateItem" class="w3-button w3-theme-d5 w3-margin-top">Update</button>
-        <button id="btnDeleteItem" class="w3-button w3-theme-d5 w3-margin-top">Delete</button>
-      </div>
-    </div> -->
 
     <div id="add">
         <h3>Add Item</h3>
@@ -139,11 +82,11 @@
               
             <div>
               <label for="txtSummaryEntry">Summary: </label>
-              <input type="text" id="txtSummaryEntry" class="w3-input w3-border w3-round" required>
+              <input type="text" id="txtSummaryEntry" class="w3-input w3-border w3-round">
             </div>
               
             <label for="txtDescEntry">Description: </label>
-            <textarea id="txtDescEntry" rows="5" cols="50" class="w3-input w3-border w3-round" required></textarea>
+            <textarea id="txtDescEntry" rows="5" cols="50" class="w3-input w3-border w3-round"></textarea>
 
             <label for="selectPriorityEntry">Priority: </label>
             <div>
@@ -163,7 +106,7 @@
           
             <div>
               <label for="dateDueEntry">Due Date:</label>
-              <input type="date" id="dateDueEntry" class="w3-input w3-border w3-round" required>
+              <input type="date" id="dateDueEntry" class="w3-input w3-border w3-round">
             </div>
 
             <div>
@@ -171,31 +114,6 @@
             </div>
         </div>
       
-        <!-- <div>
-          <div>
-            <label for="idEntry">ID:</label>
-            <input type="text" id="idAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled required>
-          </div>
-          
-          <div>
-            <label for="dateEntry">Date: </label>
-            <input type="text" id="dateAdd" class="w3-input w3-border w3-round" value="auto generated - ignore" disabled  required>
-          </div>
-          
-          <div>
-            <label for="nameEntry">Name: </label>
-            <input type="text" id="nameAdd" class="w3-input w3-border w3-round" required>
-          </div>
-          
-            <label for="txtEntry">Notes: </label>
-            <textarea id="txtAdd" name="txtAdd" rows="4" cols="50" class="w3-input w3-border w3-round" required></textarea>
-        </div>
-      
-      <div>
-        <button id="btnAddEntry" class="w3-button w3-theme-d5 w3-margin-top">Add</button>
-      </div>
-      
-    </div> -->
   </div>
   
   <!-- Footer -->
