@@ -11,7 +11,8 @@ Render Index Page
 """
 @app.route('/')
 def home():
-    return render_template('index.html')
+  """Render and return the 'index' HTML template file"""
+  return render_template('index.html')
 
 
 """
@@ -19,7 +20,8 @@ Get all To-Do List entries
 """
 @app.route('/api/todo', methods=['GET'])
 def get_todo():
-
+  """Get the 'todo' JSON file from the 'data' folder, then return it"""
+  
   folder_path = os.path.realpath(os.path.dirname(__file__))
   file_path = os.path.join(folder_path, "data", "todo.json")
 
@@ -36,6 +38,7 @@ Save all To-Do List entries
 """
 @app.route('/api/todo', methods=['PUT'])
 def set_todo():
+  """Dump the uploaded JSON string into the 'todo' JSON file in the 'data' folder"""
 
   folder_path = os.path.realpath(os.path.dirname(__file__))
   file_path = os.path.join(folder_path, "data", "todo.json")
@@ -56,6 +59,23 @@ def set_todo():
 
     return fail_msg, 400
 
+
+"""
+Docs routes
+"""
+@app.route('/docs')
+def docs():
+  """Return the simple page with 2 links, one to python docs, and one to JS docs"""
+  return render_template("docs/docs.html")
+
+@app.route('/docs/py')
+def docs_python():
+  """Render pydoc HTML files"""
+  return render_template("docs/python/main.html")
+
+@app.route('/docs/js')
+def docs_javascript():
+  return "JS goes here"
 
 """
 Run Flask
