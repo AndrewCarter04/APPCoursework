@@ -75,7 +75,7 @@ def docs_python():
 
 @app.route('/docs/js')
 def docs_javascript():
-  return "JS goes here"
+  return render_template("docs/javascript/global.html")
 
 """
 Run Flask
