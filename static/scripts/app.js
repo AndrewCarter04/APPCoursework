@@ -68,6 +68,7 @@ function isEditing() {
 /**
  * Creates a JSON Object in the correct format from a Table Record element
  * @param {Element} tableRecord - Table Record element
+ * @returns {JSON} - The data in a JSON Object in the correct format
  */
 function getEntryAsJSON(tableRecord) {
   
@@ -84,6 +85,25 @@ function getEntryAsJSON(tableRecord) {
   jsonEntry['due-date'] = tableData[5].innerText;
 
   return jsonEntry;
+  
+}
+
+/**
+ * Creates a table data inner HTML string from a JSON object in the correct format
+ * @param {JSON} jsonEntry - JSON object containing the data
+* @returns {String} - The table data inner HTML string containing the data in the correct format
+ */
+function getTableDataFromJSON(jsonEntry) {
+
+  let tableData = "<td>" + jsonEntry.id + "</td>";
+  tableData += "<td>" + jsonEntry.summary + "</td>";
+  tableData += "<td>" + jsonEntry.description + "</td>";
+  tableData += "<td>" + getStringPriority(jsonEntry.priority) + "</td>";
+  // had to use the square bracket method, as there is a '-' in the key
+  tableData += "<td>" + jsonEntry['creation-date'] + "</td>";
+  tableData += "<td>" + jsonEntry['due-date'] + "</td>";
+
+  return tableData;
   
 }
 
@@ -120,7 +140,7 @@ function addEventHandlers() {
   document.getElementById("btnAddEntry").addEventListener("click", addEntry);
 
   document.getElementById("btnSort").addEventListener("click", function() {
-    // run sort function, with the selected value from the drop down box passed in as a parameter
+    // run sort function, with the selected value from the drop down box passed in as the parameter
     sort(document.getElementById("selectSortBy").value);
   });
   
@@ -161,21 +181,15 @@ function getToDoEntries() {
 
         tableRecord.id = "tableRecord" + entry.id;
 
-        let tableData = "<td>" + entry.id + "</td>";
-        tableData += "<td>" + entry.summary + "</td>";
-        tableData += "<td>" + entry.description + "</td>";
-        tableData += "<td>" + getStringPriority(entry.priority) + "</td>";
-        // had to use the square bracket method, as there is a '-' in the key
-        tableData += "<td>" + entry['creation-date'] + "</td>";
-        tableData += "<td>" + entry['due-date'] + "</td>";
-
+        let tableData = getTableDataFromJSON(entry);
+        
         // button inner HTML
         tableData += "<td><button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
         tableData += "<button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
 
-        tableRecord.innerHTML = tableData;
+        tableRecord.innerHTML += tableData;
 
-        document.getElementById("listTableBody").appendChild(tableRecord);
+                        document.getElementById("listTableBody").appendChild(tableRecord);
 
         // add event listeners for the 'edit' and 'delete' buttons in the table
         document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
@@ -499,8 +513,31 @@ function sort(sortBy) {
 
     console.log(jsonArray);
 
-    // PUT JSON ARRAY BACK INTO TABLE. MAKE SURE TO CLEAR TABLE FIRST
-    // MAKE A FUNCTION TO CONVERT THE ARRAY INTO HTML - USE IN GETTODOENTRIES() - UTILITY
+    var tableBody = document.getElementById("listTableBody");
+
+    // clear the table
+    tableBody.innerHTML = "";
+    
+    for (let entry of jsonArray) {
+
+      let tableRecord = document.createElement("tr");
+
+      tableRecord.id = "tableRecord" + entry.id;
+      
+      let tableData = getTableDataFromJSON(entry);
+
+      // add edit and delete buttons to table entry
+      tableData += "<td><button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>" + "<button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
+
+      tableRecord.innerHTML = tableData;
+
+      tableBody.appendChild(tableRecord);
+
+      // add event listeners for edit and delete buttons
+      document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
+      document.getElementById("deleteEntry" + entry.id).addEventListener("click", function() {deleteEntry(entry.id);});
+      
+    }
 
   } else {
 
