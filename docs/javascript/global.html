@@ -156,7 +156,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line372">line 372</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line402">line 402</a>
     </li></ul></dd>
     
 
@@ -244,7 +244,95 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line95">line 95</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="clearAddEntry"><span class="type-signature"></span>clearAddEntry<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Resets all of the input elements in the 'add entry'
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line465">line 465</a>
     </li></ul></dd>
     
 
@@ -381,7 +469,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line346">line 346</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line376">line 376</a>
     </li></ul></dd>
     
 
@@ -518,7 +606,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line253">line 253</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line283">line 283</a>
     </li></ul></dd>
     
 
@@ -543,6 +631,165 @@
 
 
 
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getEntryAsJSON"><span class="type-signature"></span>getEntryAsJSON<span class="signature">(tableRecord)</span><span class="type-signature"> &rarr; {JSON}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a JSON Object in the correct format from a Table Record element
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>tableRecord</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Element</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Table Record element</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The data in a JSON Object in the correct format
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">JSON</span>
+
+
+    </dd>
+</dl>
+
+    
 
 
 
@@ -718,6 +965,165 @@
     
 
     
+    <h4 class="name" id="getTableDataFromJSON"><span class="type-signature"></span>getTableDataFromJSON<span class="signature">(jsonEntry)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Creates a table data inner HTML string from a JSON object in the correct format
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>jsonEntry</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JSON</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">JSON object containing the data</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line96">line 96</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    - The table data inner HTML string containing the data in the correct format
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">String</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="getToDoEntries"><span class="type-signature"></span>getToDoEntries<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
@@ -770,7 +1176,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line120">line 120</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -916,6 +1322,143 @@
     
 
     
+    <h4 class="name" id="sortEntries"><span class="type-signature"></span>sortEntries<span class="signature">(sortBy)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Sort the table displaying all the entries
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>sortBy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">which column the entries should be sorted by</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line484">line 484</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
     <h4 class="name" id="updateEntry"><span class="type-signature"></span>updateEntry<span class="signature">(entry)</span><span class="type-signature"></span></h4>
     
 
@@ -1017,7 +1560,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line308">line 308</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line338">line 338</a>
     </li></ul></dd>
     
 
@@ -1154,7 +1697,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line73">line 73</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1242,7 +1785,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="app.js.html">app.js</a>, <a href="app.js.html#line173">line 173</a>
+        <a href="app.js.html">app.js</a>, <a href="app.js.html#line213">line 213</a>
     </li></ul></dd>
     
 
@@ -1288,13 +1831,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addEventHandlers">addEventHandlers</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#editEntry">editEntry</a></li><li><a href="global.html#getStringPriority">getStringPriority</a></li><li><a href="global.html#getToDoEntries">getToDoEntries</a></li><li><a href="global.html#isEditing">isEditing</a></li><li><a href="global.html#updateEntry">updateEntry</a></li><li><a href="global.html#updateLocalChanges">updateLocalChanges</a></li><li><a href="global.html#uploadEntries">uploadEntries</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addEventHandlers">addEventHandlers</a></li><li><a href="global.html#clearAddEntry">clearAddEntry</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#editEntry">editEntry</a></li><li><a href="global.html#getEntryAsJSON">getEntryAsJSON</a></li><li><a href="global.html#getStringPriority">getStringPriority</a></li><li><a href="global.html#getTableDataFromJSON">getTableDataFromJSON</a></li><li><a href="global.html#getToDoEntries">getToDoEntries</a></li><li><a href="global.html#isEditing">isEditing</a></li><li><a href="global.html#sortEntries">sortEntries</a></li><li><a href="global.html#updateEntry">updateEntry</a></li><li><a href="global.html#updateLocalChanges">updateLocalChanges</a></li><li><a href="global.html#uploadEntries">uploadEntries</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 15 2023 00:48:40 GMT+0100 (British Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 15 2023 13:50:15 GMT+0100 (British Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>

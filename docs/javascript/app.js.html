@@ -93,6 +93,47 @@ function isEditing() {
   return editing;
   
 }
+/**
+ * Creates a JSON Object in the correct format from a Table Record element
+ * @param {Element} tableRecord - Table Record element
+ * @returns {JSON} - The data in a JSON Object in the correct format
+ */
+function getEntryAsJSON(tableRecord) {
+  
+  var jsonEntry = {};
+
+  var tableData = tableRecord.querySelectorAll("td");
+  
+  jsonEntry.id = tableData[0].innerText;
+  jsonEntry.summary = tableData[1].innerText;
+  jsonEntry.description = tableData[2].innerText;
+  jsonEntry.priority = tableData[3].innerText.charAt(0);
+  // had to use the square bracket method for these two, as they have a "-" in the key
+  jsonEntry['creation-date'] = tableData[4].innerText;
+  jsonEntry['due-date'] = tableData[5].innerText;
+
+  return jsonEntry;
+  
+}
+
+/**
+ * Creates a table data inner HTML string from a JSON object in the correct format
+ * @param {JSON} jsonEntry - JSON object containing the data
+* @returns {String} - The table data inner HTML string containing the data in the correct format
+ */
+function getTableDataFromJSON(jsonEntry) {
+
+  let tableData = "&lt;td>" + jsonEntry.id + "&lt;/td>";
+  tableData += "&lt;td>" + jsonEntry.summary + "&lt;/td>";
+  tableData += "&lt;td>" + jsonEntry.description + "&lt;/td>";
+  tableData += "&lt;td>" + getStringPriority(jsonEntry.priority) + "&lt;/td>";
+  // had to use the square bracket method, as there is a '-' in the key
+  tableData += "&lt;td>" + jsonEntry['creation-date'] + "&lt;/td>";
+  tableData += "&lt;td>" + jsonEntry['due-date'] + "&lt;/td>";
+
+  return tableData;
+  
+}
 
 /**
  * Sets the 'Changed saved' text to display the relevant information
@@ -125,6 +166,11 @@ function addEventHandlers() {
   document.getElementById("btnUploadList").addEventListener("click", uploadEntries);
 
   document.getElementById("btnAddEntry").addEventListener("click", addEntry);
+
+  document.getElementById("btnSort").addEventListener("click", function() {
+    // run sort function, with the selected value from the drop down box passed in as the parameter
+    sortEntries(document.getElementById("selectSortBy").value);
+  });
   
 }
 
@@ -163,21 +209,15 @@ function getToDoEntries() {
 
         tableRecord.id = "tableRecord" + entry.id;
 
-        let tableData = "&lt;td>" + entry.id + "&lt;/td>";
-        tableData += "&lt;td>" + entry.summary + "&lt;/td>";
-        tableData += "&lt;td>" + entry.description + "&lt;/td>";
-        tableData += "&lt;td>" + getStringPriority(entry.priority) + "&lt;/td>";
-        // had to use the square bracket method, as there is a '-' in the key
-        tableData += "&lt;td>" + entry['creation-date'] + "&lt;/td>";
-        tableData += "&lt;td>" + entry['due-date'] + "&lt;/td>";
-
+        let tableData = getTableDataFromJSON(entry);
+        
         // button inner HTML
         tableData += "&lt;td>&lt;button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit&lt;/button>";
         tableData += "&lt;button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete&lt;/button>&lt;/td>";
 
-        tableRecord.innerHTML = tableData;
+        tableRecord.innerHTML += tableData;
 
-        document.getElementById("listTableBody").appendChild(tableRecord);
+                        document.getElementById("listTableBody").appendChild(tableRecord);
 
         // add event listeners for the 'edit' and 'delete' buttons in the table
         document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
@@ -212,18 +252,8 @@ function uploadEntries() {
     for (let i = 0; i &lt; tableRecords.length; i++) {
     
       let tableRecord = tableRecords[i];
-      // get array of all table data entries
-      let tableData = tableRecord.getElementsByTagName("td");
 
-      let jsonEntry = {};
-    
-      jsonEntry.id = tableData[0].innerText;
-      jsonEntry.summary = tableData[1].innerText;
-      jsonEntry.description = tableData[2].innerText;
-      jsonEntry.priority = tableData[3].innerText.charAt(0);
-      // had to use the square bracket method for these two, as they have a "-" in the key
-      jsonEntry['creation-date'] = tableData[4].innerText;
-      jsonEntry['due-date'] = tableData[5].innerText;
+      let jsonEntry = getEntryAsJSON(tableRecord);
 
       // add the JSON entry to the 'entries' JSON Array
       jsonData.entries.push(jsonEntry);
@@ -390,7 +420,7 @@ function deleteEntry(entry) {
 
 /*
  *
- *  Add entry
+ *  Add and Clear entry
  *
  */
 
@@ -451,7 +481,99 @@ function addEntry() {
   
     updateLocalChanges(true);
 
+    clearAddEntry();
+    
   }
+  
+}
+
+/**
+ * Resets all of the input elements in the 'add entry'
+ */
+function clearAddEntry() {
+
+  document.getElementById("txtSummaryEntry").value = "";
+  document.getElementById("txtDescEntry").value = "";
+  document.getElementById("selectPriorityEntry").value = "3";
+  document.getElementById("dateDueEntry").value = "";
+  
+}
+
+/*
+ *
+ *  Additonal feature
+ *
+ */
+
+/**
+ * Sort the table displaying all the entries
+ * @param {String} sortBy - which column the entries should be sorted by
+ */
+function sortEntries(sortBy) {
+
+  if (!isEditing()) {
+  
+    var tableBody = document.getElementById("listTableBody");
+    var tableRecords = tableBody.querySelectorAll("tr");
+  
+    jsonArray = [];
+
+    for (var tableRecord of tableRecords) {
+      // add the JSON entry to the JSON array
+      jsonArray.push(getEntryAsJSON(tableRecord));
+    }
+
+    // sort the array
+    jsonArray.sort(function(x, y) {
+      
+      var a = x[sortBy]; // value 1
+      var b = y[sortBy]; // value 2
+      
+      if (a &lt; b) {
+        return -1; // tells sort 'a' comes before 'b'
+      } else if (a > b) {
+        return 1; // tells sort 'a' comes after 'b'
+      } else {
+        return 0; // tells sort 'a' and 'b' are equal
+      }
+      
+    });
+
+    console.log(jsonArray);
+
+    var tableBody = document.getElementById("listTableBody");
+
+    // clear the table
+    tableBody.innerHTML = "";
+    
+    for (let entry of jsonArray) {
+
+      let tableRecord = document.createElement("tr");
+
+      tableRecord.id = "tableRecord" + entry.id;
+      
+      let tableData = getTableDataFromJSON(entry);
+
+      // add edit and delete buttons to table entry
+      tableData += "&lt;td>&lt;button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit&lt;/button>" + "&lt;button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete&lt;/button>&lt;/td>";
+
+      tableRecord.innerHTML = tableData;
+
+      tableBody.appendChild(tableRecord);
+
+      // add event listeners for edit and delete buttons
+      document.getElementById("editEntry" + entry.id).addEventListener("click", function() {editEntry(entry.id);});
+      document.getElementById("deleteEntry" + entry.id).addEventListener("click", function() {deleteEntry(entry.id);});
+      
+    }
+
+  } else {
+
+    alert("You must finish editing an entry before sorting!");
+    
+  }
+
+  updateLocalChanges(true);
   
 }</code></pre>
         </article>
@@ -463,13 +585,13 @@ function addEntry() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addEventHandlers">addEventHandlers</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#editEntry">editEntry</a></li><li><a href="global.html#getStringPriority">getStringPriority</a></li><li><a href="global.html#getToDoEntries">getToDoEntries</a></li><li><a href="global.html#isEditing">isEditing</a></li><li><a href="global.html#updateEntry">updateEntry</a></li><li><a href="global.html#updateLocalChanges">updateLocalChanges</a></li><li><a href="global.html#uploadEntries">uploadEntries</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addEntry">addEntry</a></li><li><a href="global.html#addEventHandlers">addEventHandlers</a></li><li><a href="global.html#clearAddEntry">clearAddEntry</a></li><li><a href="global.html#deleteEntry">deleteEntry</a></li><li><a href="global.html#editEntry">editEntry</a></li><li><a href="global.html#getEntryAsJSON">getEntryAsJSON</a></li><li><a href="global.html#getStringPriority">getStringPriority</a></li><li><a href="global.html#getTableDataFromJSON">getTableDataFromJSON</a></li><li><a href="global.html#getToDoEntries">getToDoEntries</a></li><li><a href="global.html#isEditing">isEditing</a></li><li><a href="global.html#sortEntries">sortEntries</a></li><li><a href="global.html#updateEntry">updateEntry</a></li><li><a href="global.html#updateLocalChanges">updateLocalChanges</a></li><li><a href="global.html#uploadEntries">uploadEntries</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 15 2023 00:48:40 GMT+0100 (British Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 15 2023 13:50:15 GMT+0100 (British Summer Time)
 </footer>
 
 <script> prettyPrint(); </script>
