@@ -140,8 +140,8 @@ function addEventHandlers() {
   document.getElementById("btnAddEntry").addEventListener("click", addEntry);
 
   document.getElementById("btnSort").addEventListener("click", function() {
-    // run sort function, with the selected value from the drop down box passed in as the parameter
-    sortEntries(document.getElementById("selectSortBy").value);
+    // run sort function, with the selected values from the drop down boxes passed in as the parameters
+    sortEntries(document.getElementById("selectSortBy").value, document.getElementById("selectSortOrder").value);
   });
   
 }
@@ -343,9 +343,9 @@ function updateEntry(entry) {
   var trChildren = tableRecord.querySelectorAll("td");
 
   // get all the entry data
-  var id = trChildren[0].querySelector("input").getAttribute("value");
-  var summary = trChildren[1].querySelector("input").getAttribute("value");
-  var description = trChildren[2].querySelector("input").getAttribute("value");
+  var id = trChildren[0].querySelector("input").value;
+  var summary = trChildren[1].querySelector("input").value;
+  var description = trChildren[2].querySelector("input").value;
   var priority = getStringPriority(trChildren[3].querySelector("select").value);
   var creationDate = new Date(trChildren[4].querySelector("input").value).toLocaleDateString('en-GB');
   var dueDate = new Date(trChildren[5].querySelector("input").value).toLocaleDateString('en-GB');
@@ -478,10 +478,14 @@ function clearAddEntry() {
  */
 
 /**
- * Sort the table displaying all the entries
+ * Sort the table by the selected column, and displays all the entries in the order selected
+ * @example
+ * // Sorts the table by "ID", Low to High 
+ * sortEntries("id", "lowtohigh");
  * @param {String} sortBy - which column the entries should be sorted by
+ * @param {String} sortOrder - Low to High, or High to Low
  */
-function sortEntries(sortBy) {
+function sortEntries(sortBy, sortOrder) {
 
   if (!isEditing()) {
   
@@ -500,18 +504,30 @@ function sortEntries(sortBy) {
       
       var a = x[sortBy]; // value 1
       var b = y[sortBy]; // value 2
+
+      // Date compatibility
+      if (sortBy == "creation-date" || sortBy == "due-date") {
+        let dateArrayA = a.split("/")
+        let dateArrayB = b.split("/")
+        let dateA = dateArrayA[2] + "-" + dateArrayA[1] + "-" + dateArrayA[0];
+        let dateB = dateArrayB[2] + "-" + dateArrayB[1] + "-" + dateArrayB[0];
+        a = new Date(dateA); // set 'a' to the date value
+        b = new Date(dateB); // set 'b' to the date value
+      }
+
+      // if order is '-1' the sort moves the higher items to the top, and if it is '1' it moves the lower items to the top
+      // short hand for an if statement
+      let order = sortOrder == "lowtohigh" ? 1 : -1;
       
       if (a < b) {
-        return -1; // tells sort 'a' comes before 'b'
+        return -1 * order; // tells sort 'a' comes before 'b'
       } else if (a > b) {
-        return 1; // tells sort 'a' comes after 'b'
+        return 1 * order; // tells sort 'a' comes after 'b'
       } else {
         return 0; // tells sort 'a' and 'b' are equal
       }
       
     });
-
-    console.log(jsonArray);
 
     var tableBody = document.getElementById("listTableBody");
 
