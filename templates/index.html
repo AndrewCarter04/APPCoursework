@@ -1,11 +1,5 @@
 <!DOCTYPE html>
 <html>
-
-  <!-- TODO LIST
-  
-      - ADDITIONAL FEATURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SORT BY
-  
-  -->
   
 <head>
 	<title>APP Assignment</title>
@@ -39,10 +33,23 @@
   <div id="todo" class="w3-container w3-theme-l4">
     <h2>To-Do List</h2>
     <div>
-        <h3 id="list">List Items</h3>
+        <h3 id="list">List Entries</h3>
 
-        <!-- Sort by and filter buttons will go here (additional feature) -->
+        <!-- Additional Feature -->
 
+        <div class="w3-container w3-right-align">
+          <a>Sort By:</a>
+          <select id="selectSortBy">
+            <option value="id" selected>ID</option>
+            <option value="summary">Summary</option>
+            <option value="description">Description</option>
+            <option value="priority">Priority</option>
+            <option value="creationDate">Creation Date</option>
+            <option value="dueDate">Due Date</option>
+          </select>
+          <button type="button" id="btnSort">Sort</button>
+        </div>
+      
         <table id="listTable" class="w3-table-all">
           <thead>
             <tr>
@@ -52,7 +59,7 @@
               <th>Priority</th>
               <th>Creation Date</th>
               <th>Due Date</th>
-              <th>Edit/Delete</th>
+              <th></th> <!-- Buttons column -->
             </tr>
           </thead>
           <tbody id="listTableBody">
@@ -69,7 +76,7 @@
     
 
     <div id="add">
-        <h3>Add Item</h3>
+      <h3>Add Entry</h3>
 
       <div>
             <div>
@@ -87,7 +94,7 @@
 
             <label for="selectPriorityEntry">Priority: </label>
             <div>
-              <select id="selectPriorityEntry" required>
+              <select id="selectPriorityEntry">
                 <option value="1">1 - Highest</option>
                 <option value="2">2 - High</option>
                 <option value="3" selected>3 - Medium</option>

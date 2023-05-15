@@ -65,6 +65,27 @@ function isEditing() {
   return editing;
   
 }
+/**
+ * Creates a JSON Object in the correct format from a Table Record element
+ * @param {Element} tableRecord - Table Record element
+ */
+function getEntryAsJSON(tableRecord) {
+  
+  var jsonEntry = {};
+
+  var tableData = tableRecord.querySelectorAll("td");
+  
+  jsonEntry.id = tableData[0].innerText;
+  jsonEntry.summary = tableData[1].innerText;
+  jsonEntry.description = tableData[2].innerText;
+  jsonEntry.priority = tableData[3].innerText.charAt(0);
+  // had to use the square bracket method for these two, as they have a "-" in the key
+  jsonEntry['creation-date'] = tableData[4].innerText;
+  jsonEntry['due-date'] = tableData[5].innerText;
+
+  return jsonEntry;
+  
+}
 
 /**
  * Sets the 'Changed saved' text to display the relevant information
@@ -97,6 +118,11 @@ function addEventHandlers() {
   document.getElementById("btnUploadList").addEventListener("click", uploadEntries);
 
   document.getElementById("btnAddEntry").addEventListener("click", addEntry);
+
+  document.getElementById("btnSort").addEventListener("click", function() {
+    // run sort function, with the selected value from the drop down box passed in as a parameter
+    sort(document.getElementById("selectSortBy").value);
+  });
   
 }
 
@@ -184,18 +210,8 @@ function uploadEntries() {
     for (let i = 0; i < tableRecords.length; i++) {
     
       let tableRecord = tableRecords[i];
-      // get array of all table data entries
-      let tableData = tableRecord.getElementsByTagName("td");
 
-      let jsonEntry = {};
-    
-      jsonEntry.id = tableData[0].innerText;
-      jsonEntry.summary = tableData[1].innerText;
-      jsonEntry.description = tableData[2].innerText;
-      jsonEntry.priority = tableData[3].innerText.charAt(0);
-      // had to use the square bracket method for these two, as they have a "-" in the key
-      jsonEntry['creation-date'] = tableData[4].innerText;
-      jsonEntry['due-date'] = tableData[5].innerText;
+      let jsonEntry = getEntryAsJSON(tableRecord);
 
       // add the JSON entry to the 'entries' JSON Array
       jsonData.entries.push(jsonEntry);
@@ -362,7 +378,7 @@ function deleteEntry(entry) {
 
 /*
  *
- *  Add entry
+ *  Add and Clear entry
  *
  */
 
@@ -423,6 +439,75 @@ function addEntry() {
   
     updateLocalChanges(true);
 
+    clearAddEntry();
+    
   }
+  
+}
+
+/**
+ * Resets all of the input elements in the 'add entry'
+ */
+function clearAddEntry() {
+
+  document.getElementById("txtSummaryEntry").value = "";
+  document.getElementById("txtDescEntry").value = "";
+  document.getElementById("selectPriorityEntry").value = "3";
+  document.getElementById("dateDueEntry").value = "";
+  
+}
+
+/*
+ *
+ *  Additonal feature
+ *
+ */
+
+/**
+ * Sort the table displaying all the entries
+ * @param {String} sortBy - which column the entries should be sorted by
+ */
+function sort(sortBy) {
+
+  if (!isEditing()) {
+  
+    var tableBody = document.getElementById("listTableBody");
+    var tableRecords = tableBody.querySelectorAll("tr");
+  
+    jsonArray = [];
+
+    for (var tableRecord of tableRecords) {
+      // add the JSON entry to the JSON array
+      jsonArray.push(getEntryAsJSON(tableRecord));
+    }
+
+    // sort the array
+    jsonArray.sort(function(x, y) {
+      
+      var a = x[sortBy]; // value 1
+      var b = y[sortBy]; // value 2
+      
+      if (a < b) {
+        return -1; // tells sort 'a' comes before 'b'
+      } else if (a > b) {
+        return 1; // tells sort 'a' comes after 'b'
+      } else {
+        return 0; // tells sort 'a' and 'b' are equal
+      }
+      
+    });
+
+    console.log(jsonArray);
+
+    // PUT JSON ARRAY BACK INTO TABLE. MAKE SURE TO CLEAR TABLE FIRST
+    // MAKE A FUNCTION TO CONVERT THE ARRAY INTO HTML - USE IN GETTODOENTRIES() - UTILITY
+
+  } else {
+
+    alert("You must finish editing an entry before sorting!");
+    
+  }
+
+  updateLocalChanges(true);
   
 }
