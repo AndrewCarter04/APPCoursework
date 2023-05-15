@@ -141,7 +141,7 @@ function addEventHandlers() {
 
   document.getElementById("btnSort").addEventListener("click", function() {
     // run sort function, with the selected value from the drop down box passed in as the parameter
-    sort(document.getElementById("selectSortBy").value);
+    sortEntries(document.getElementById("selectSortBy").value);
   });
   
 }
@@ -481,7 +481,7 @@ function clearAddEntry() {
  * Sort the table displaying all the entries
  * @param {String} sortBy - which column the entries should be sorted by
  */
-function sort(sortBy) {
+function sortEntries(sortBy) {
 
   if (!isEditing()) {
   
