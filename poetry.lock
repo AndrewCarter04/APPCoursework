@@ -30,7 +30,7 @@ dev = ["black", "build", "flake8", "mypy", "pre-commit", "pytest", "pytest-mypy"
 
 [[package]]
 name = "docutils"
-version = "0.19"
+version = "0.20"
 description = "Docutils -- Python Documentation Utilities"
 category = "main"
 optional = false
