@@ -187,7 +187,7 @@ function getToDoEntries() {
         tableData += "<td><button id='editEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>";
         tableData += "<button id='deleteEntry" + entry.id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button></td>";
 
-        tableRecord.innerHTML += tableData;
+        tableRecord.innerHTML = tableData;
 
                         document.getElementById("listTableBody").appendChild(tableRecord);
 
@@ -351,12 +351,12 @@ function updateEntry(entry) {
   var dueDate = new Date(trChildren[5].querySelector("input").value).toLocaleDateString('en-GB');
   
   // set all the entry data, with no HTML tag, as it is already in a '<td>' tag
-  trChildren[0].innerHTML = id;
-  trChildren[1].innerHTML = summary;
-  trChildren[2].innerHTML = description;
-  trChildren[3].innerHTML = priority;
-  trChildren[4].innerHTML = creationDate;
-  trChildren[5].innerHTML = dueDate;
+  trChildren[0].innerText = id;
+  trChildren[1].innerText = summary;
+  trChildren[2].innerText = description;
+  trChildren[3].innerText = priority;
+  trChildren[4].innerText = creationDate;
+  trChildren[5].innerText = dueDate;
 
   // add edit and delete buttons
   trChildren[6].innerHTML = "<button id='editEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Edit</button>" + "<button id='deleteEntry" + id + "' class='w3-button w3-theme-d5 w3-margin-top'>Delete</button>";
@@ -400,7 +400,7 @@ function deleteEntry(entry) {
  * Add a new entry to the DOM
  */
 function addEntry() {
-
+  
   // input validation
   var validInputs = true;
 
@@ -518,6 +518,10 @@ function sortEntries(sortBy, sortOrder) {
       // if order is '-1' the sort moves the higher items to the top, and if it is '1' it moves the lower items to the top
       // short hand for an if statement
       let order = sortOrder == "lowtohigh" ? 1 : -1;
+
+      if (sortBy == "priority") {
+        order *= -1; // reverse order for sort by priority, as 5 is low and 1 is high
+      }
       
       if (a < b) {
         return -1 * order; // tells sort 'a' comes before 'b'
