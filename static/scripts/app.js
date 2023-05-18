@@ -507,8 +507,8 @@ function sortEntries(sortBy, sortOrder) {
 
       // Date compatibility
       if (sortBy == "creation-date" || sortBy == "due-date") {
-        let dateArrayA = a.split("/")
-        let dateArrayB = b.split("/")
+        let dateArrayA = a.split("/");
+        let dateArrayB = b.split("/");
         let dateA = dateArrayA[2] + "-" + dateArrayA[1] + "-" + dateArrayA[0];
         let dateB = dateArrayB[2] + "-" + dateArrayB[1] + "-" + dateArrayB[0];
         a = new Date(dateA); // set 'a' to the date value
